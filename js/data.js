@@ -143,7 +143,7 @@ const SALAS = {
     id: "claustro-central",
     nombre: "Claustro Central",
     foto: "img/salas/San_Antonio_el_Real_-_Claustro_Central_01.png",
-    bounds: [[-548, 554], [-308, 832]],
+    bounds: [[-364, 643], [-516, 867]],
     funcion: "",
     uso_dramatico: "",
     objeto: "",
