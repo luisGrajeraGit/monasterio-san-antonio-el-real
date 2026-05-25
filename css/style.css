@@ -1,0 +1,487 @@
+/* ============================================================
+   Monasterio de San Antonio el Real — Plano Interactivo
+   Proyecto: Silencio
+   ============================================================ */
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+  --bg:          #0d0d0d;
+  --surface:     #141414;
+  --surface-2:   #1c1c1c;
+  --border:      #282828;
+  --border-acc:  #7d2020;
+  --text:        #dfd6c8;
+  --text-muted:  #6a6259;
+  --accent:      #7d2020;
+  --accent-h:    #a03030;
+  --panel-w:     340px;
+  --header-h:    54px;
+  --serif:       'Crimson Pro', Georgia, 'Times New Roman', serif;
+  --mono:        'Courier New', Courier, monospace;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+a { color: inherit; }
+
+/* ── Header compartido ──────────────────────────────────────── */
+.site-header {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border-acc);
+  background: var(--bg);
+  position: relative;
+  z-index: 200;
+  flex-shrink: 0;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.site-header .proyecto {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── Botón volver (sala.html) ───────────────────────────────── */
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.btn-volver:hover { color: var(--text); }
+
+.sala-indice-contador {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PÁGINA MAPA (index.html)
+   ══════════════════════════════════════════════════════════════ */
+
+.pagina-mapa {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pagina-mapa main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Mapa Leaflet ───────────────────────────────────────────── */
+#map {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface-2);
+}
+
+/* Fondo del contenedor Leaflet */
+.leaflet-container {
+  background: var(--surface-2) !important;
+}
+
+/* El cursor sobre zonas clicables */
+.leaflet-interactive {
+  cursor: pointer !important;
+}
+
+/* Tooltip de sala */
+.sala-tooltip {
+  background: var(--bg) !important;
+  border: 1px solid var(--border-acc) !important;
+  border-radius: 2px !important;
+  color: var(--text) !important;
+  font-family: var(--serif) !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 5px 11px !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+}
+.sala-tooltip::before { display: none !important; }
+
+/* Controles de zoom de Leaflet */
+.leaflet-control-zoom a {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+.leaflet-control-zoom a:hover {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+
+/* ── Panel lateral ──────────────────────────────────────────── */
+.panel-wrapper {
+  width: var(--panel-w);
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.32s;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+  position: relative;
+}
+
+.panel-wrapper.oculto {
+  width: 0;
+  border-left-color: transparent;
+}
+
+#panel {
+  width: var(--panel-w);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Foto del panel */
+.panel-foto-wrap {
+  width: 100%;
+  height: 210px;
+  flex-shrink: 0;
+  background: var(--surface-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-foto-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.panel-foto-placeholder span {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.panel-foto-placeholder svg {
+  opacity: 0.3;
+}
+
+.panel-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Cabecera del panel con nombre + botón cerrar */
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.panel-nombre {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.panel-cerrar {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+.panel-cerrar:hover { color: var(--text); }
+
+/* Info del panel */
+.panel-info {
+  padding: 20px 22px 26px;
+  flex: 1;
+}
+
+.panel-dl {
+  margin: 0 0 22px 0;
+}
+
+.panel-dl dt {
+  font-size: 0.67rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 14px 0 3px;
+}
+.panel-dl dt:first-child { margin-top: 0; }
+
+.panel-dl dd {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.panel-dl dd.vacio {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Botón de ficha completa */
+.btn-ficha {
+  display: block;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 10px 16px;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-ficha:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── Debug overlay ──────────────────────────────────────────── */
+#coords-debug {
+  position: fixed;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(0, 0, 0, 0.88);
+  color: #00e676;
+  padding: 8px 13px;
+  font-family: var(--mono);
+  font-size: 11px;
+  border-radius: 3px;
+  z-index: 9999;
+  border: 1px solid #00e676;
+  pointer-events: none;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PÁGINA FICHA DE SALA (sala.html)
+   ══════════════════════════════════════════════════════════════ */
+
+.pagina-sala {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Foto de cabecera */
+.sala-foto-wrap {
+  width: 100%;
+  height: clamp(240px, 42vh, 480px);
+  background: var(--surface-2);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sala-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.82);
+}
+
+.sala-foto-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-muted);
+}
+.sala-foto-placeholder span {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.sala-foto-placeholder svg { opacity: 0.25; }
+
+/* Contenido de la ficha */
+.sala-contenido {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 44px 32px 64px;
+  flex: 1;
+}
+
+.sala-titulo {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 36px 0;
+  line-height: 1.1;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-acc);
+}
+
+.sala-seccion {
+  margin-bottom: 28px;
+}
+
+.sala-seccion-label {
+  font-size: 0.67rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 7px;
+}
+
+.sala-seccion-texto {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+.sala-seccion-texto.vacio {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Navegación inferior entre salas */
+.sala-nav-inferior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding: 14px 28px;
+  background: var(--bg);
+  gap: 12px;
+}
+
+.btn-nav-sala {
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 38%;
+}
+.btn-nav-sala:hover { color: var(--text); }
+
+.btn-nav-sala.btn-plano {
+  max-width: none;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.btn-nav-sala.btn-plano:hover {
+  color: var(--text);
+  border-color: var(--border-acc);
+}
+
+.btn-nav-sala.btn-prev { text-align: left; }
+.btn-nav-sala.btn-next { text-align: right; }
+
+/* ── Página de error ────────────────────────────────────────── */
+.sala-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+}
+.sala-error h2 {
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --panel-w: 100vw; }
+
+  .pagina-mapa main { flex-direction: column; }
+
+  .panel-wrapper {
+    width: 100%;
+    height: 0;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    transition: height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.32s;
+  }
+  .panel-wrapper.oculto {
+    width: 100%;
+    height: 0;
+    border-top-color: transparent;
+  }
+  .panel-wrapper:not(.oculto) { height: 60vh; }
+
+  #panel { width: 100%; }
+  .panel-foto-wrap { height: 160px; }
+
+  .sala-contenido { padding: 28px 20px 48px; }
+  .sala-nav-inferior { padding: 12px 16px; }
+  .btn-nav-sala.btn-nav-sala { font-size: 0.7rem; }
+}

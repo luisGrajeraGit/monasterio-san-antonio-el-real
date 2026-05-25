@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargando… — Monasterio de San Antonio el Real</title>
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-sala">
+
+  <!-- ── Cabecera ───────────────────────────────────────────── -->
+  <header class="site-header">
+    <a href="index.html" class="btn-volver">← Volver al plano</a>
+    <span id="sala-indice" class="sala-indice-contador"></span>
+  </header>
+
+  <!-- ── Foto de cabecera ────────────────────────────────────── -->
+  <div class="sala-foto-wrap">
+    <div id="sala-foto-placeholder" class="sala-foto-placeholder" style="display:none;">
+      <!-- El SVG y el texto se inyectan desde sala.js -->
+    </div>
+    <img id="sala-foto" class="sala-foto" src="" alt="">
+  </div>
+
+  <!-- ── Contenido de la ficha ──────────────────────────────── -->
+  <div class="sala-contenido" id="sala-contenido">
+    <h1 id="sala-titulo" class="sala-titulo"></h1>
+    <div id="sala-secciones"></div>
+  </div>
+
+  <!-- ── Navegación inferior ────────────────────────────────── -->
+  <nav class="sala-nav-inferior">
+    <a id="sala-prev" href="#" class="btn-nav-sala btn-prev"></a>
+    <a href="index.html" class="btn-nav-sala btn-plano">Plano</a>
+    <a id="sala-next" href="#" class="btn-nav-sala btn-next"></a>
+  </nav>
+
+  <!-- Datos y lógica -->
+  <script src="js/data.js"></script>
+  <script src="js/sala.js"></script>
+
+</body>
+</html>

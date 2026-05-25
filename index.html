@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monasterio de San Antonio el Real — Plano Interactivo</title>
+
+  <!-- Leaflet CSS (local) -->
+  <link rel="stylesheet" href="lib/leaflet.css">
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-mapa">
+
+  <!-- ── Cabecera ───────────────────────────────────────────── -->
+  <header class="site-header">
+    <h1>Monasterio de San Antonio el Real</h1>
+    <p class="proyecto"><em>Silencio</em></p>
+  </header>
+
+  <!-- ── Mapa + Panel ───────────────────────────────────────── -->
+  <main>
+
+    <!-- Contenedor del mapa Leaflet -->
+    <div id="map"></div>
+
+    <!-- Panel lateral (se abre al hacer clic en una sala) -->
+    <div id="panel-wrapper" class="panel-wrapper oculto">
+      <div id="panel">
+
+        <!-- Foto de la sala -->
+        <div class="panel-foto-wrap">
+          <div id="panel-foto-placeholder" class="panel-foto-placeholder">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="0.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="1.5" ry="1.5"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Sin imagen</span>
+          </div>
+          <img
+            id="panel-foto"
+            class="panel-foto"
+            src=""
+            alt=""
+            style="display:none"
+            onerror="this.style.display='none';
+                     document.getElementById('panel-foto-placeholder').style.display='flex';"
+          >
+        </div>
+
+        <!-- Info de la sala -->
+        <div class="panel-info">
+          <div class="panel-header">
+            <h2 id="panel-nombre" class="panel-nombre"></h2>
+            <button class="panel-cerrar" onclick="cerrarPanel()" title="Cerrar panel">×</button>
+          </div>
+
+          <dl class="panel-dl">
+            <dt>Función</dt>
+            <dd id="panel-funcion" class="vacio">—</dd>
+
+            <dt>Uso dramático</dt>
+            <dd id="panel-dramatico" class="vacio">—</dd>
+
+            <dt>Objeto</dt>
+            <dd id="panel-objeto" class="vacio">—</dd>
+          </dl>
+
+          <a id="panel-link" href="#" class="btn-ficha">Ver ficha completa</a>
+        </div>
+
+      </div><!-- /#panel -->
+    </div><!-- /#panel-wrapper -->
+
+  </main>
+
+  <!-- Overlay de coordenadas (modo debug, activa con tecla D) -->
+  <div id="coords-debug" style="display:none;"></div>
+
+  <!-- Leaflet JS (local) -->
+  <script src="lib/leaflet.js"></script>
+
+  <!-- Datos y lógica -->
+  <script src="js/data.js"></script>
+  <script src="js/mapa.js"></script>
+
+</body>
+</html>
