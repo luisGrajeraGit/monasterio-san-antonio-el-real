@@ -157,6 +157,17 @@
   // Exponer globalmente para el onclick del HTML
   window.cerrarPanel = cerrarPanel;
 
+  // ── Toggle del mapa en móvil ───────────────────────────────────────────────
+  function toggleMapa() {
+    var mapEl    = document.getElementById('map');
+    var chevron  = document.getElementById('mapa-chevron');
+    var colapsado = mapEl.classList.toggle('mapa-colapsado');
+    // Chevron: apunta arriba (⌃) cuando el mapa está visible, abajo (⌄) cuando colapsado
+    if (chevron) chevron.style.transform = colapsado ? 'rotate(180deg)' : '';
+    setTimeout(function () { map.invalidateSize(); }, 370);
+  }
+  window.toggleMapa = toggleMapa;
+
   // ── Modo debug: pulsa D para ver coordenadas en tiempo real ───────────────
   //
   //  Cómo usarlo para ajustar las zonas de las salas:

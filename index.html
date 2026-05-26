@@ -33,6 +33,29 @@
 
     <!-- Panel lateral (se abre al hacer clic en una sala) -->
     <div id="panel-wrapper" class="panel-wrapper oculto">
+
+      <!-- Handle para colapsar/expandir el mapa (sólo en móvil) -->
+      <div class="panel-mapa-handle" id="mapa-toggle-btn"
+           onclick="toggleMapa()" role="button" tabindex="0"
+           aria-label="Colapsar o expandir el plano">
+        <svg id="mapa-chevron" xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"/>
+        </svg>
+        <span>Plano</span>
+      </div>
+
+      <!-- Placeholder cuando no hay sala seleccionada (sólo en móvil) -->
+      <div class="panel-placeholder-movil" id="panel-placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="0.8"
+             stroke-linecap="round" stroke-linejoin="round" style="opacity:0.3">
+          <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+        </svg>
+        <span>Toca una sala del plano</span>
+      </div>
+
       <div id="panel">
 
         <!-- Foto de la sala -->
