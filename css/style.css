@@ -274,6 +274,29 @@ a { color: inherit; }
   font-style: italic;
 }
 
+/* Enlace “Ver ficha completa” al pie del panel */
+.panel-btn-ficha {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 20px;
+  padding: 7px 13px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  width: 100%;
+  justify-content: center;
+  transition: color 0.2s, border-color 0.2s;
+}
+.panel-btn-ficha:hover {
+  color: var(--text);
+  border-color: var(--border-acc);
+}
+
 /* ── Debug overlay ──────────────────────────────────────────── */
 #coords-debug {
   position: fixed;
@@ -532,31 +555,110 @@ a { color: inherit; }
   margin-bottom: 12px;
 }
 
-/* ── Responsive ─────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE  (móvil)
+   ══════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  :root { --panel-w: 100vw; }
 
-  .pagina-mapa main { flex-direction: column; }
+  /* Cabecera más compacta */
+  :root { --header-h: 48px; }
 
+  .site-header { padding: 0 16px; }
+  .site-header h1 {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+  }
+
+  /* El main actúa como contenedor posicionado */
+  .pagina-mapa main {
+    position: relative;
+  }
+
+  /* El mapa ocupa todo el contenedor */
+  #map {
+    position: absolute;
+    inset: 0;
+    flex: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── Panel como bottom sheet ────────────────────────────── */
   .panel-wrapper {
-    width: 100%;
-    height: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100% !important;
+    max-height: 54vh;
     border-left: none;
-    border-top: 1px solid var(--border);
-    transition: height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 0.32s;
+    border-top: 1px solid var(--border-acc);
+    border-radius: 16px 16px 0 0;
+    z-index: 400;
+    /* Reemplazamos la transición de ancho por transform */
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
   }
+
   .panel-wrapper.oculto {
-    width: 100%;
-    height: 0;
-    border-top-color: transparent;
+    width: 100% !important; /* anula el width:0 del estilo base */
+    border-top-color: var(--border-acc);
+    transform: translateY(110%);
   }
-  .panel-wrapper:not(.oculto) { height: 60vh; }
 
-  #panel { width: 100%; }
-  .panel-foto-wrap { height: 160px; }
+  /* Indicador visual de arrastre */
+  .panel-wrapper::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 3px;
+    background: var(--border-acc);
+    border-radius: 2px;
+    margin: 10px auto 4px;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
 
+  /* Contenido: foto miniatura a la izquierda, info a la derecha */
+  #panel {
+    width: 100%;
+    flex-direction: row;
+    max-height: calc(54vh - 27px); /* resta el espacio del handle */
+    overflow: hidden;
+  }
+
+  .panel-foto-wrap {
+    width: 108px;
+    height: auto;
+    min-height: 100%;
+    flex-shrink: 0;
+  }
+
+  .panel-info {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 12px 14px 16px;
+  }
+
+  .panel-nombre {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .panel-dl dt { margin-top: 10px; }
+
+  /* Botón "Ver ficha" más prominente en móvil */
+  .panel-btn-ficha {
+    margin-top: 14px;
+    padding: 10px 13px;
+    color: var(--text);
+    border-color: var(--border-acc);
+    font-size: 0.7rem;
+  }
+
+  /* Ficha de sala */
   .sala-contenido { padding: 28px 20px 48px; }
   .sala-nav-inferior { padding: 12px 16px; }
-  .btn-nav-sala.btn-nav-sala { font-size: 0.7rem; }
+  .btn-nav-sala { font-size: 0.7rem; }
 }

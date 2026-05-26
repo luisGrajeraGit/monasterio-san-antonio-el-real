@@ -40,6 +40,9 @@
   // ── Estado ─────────────────────────────────────────────────────────────────
   let salaActiva = null;
 
+  // Detectar dispositivo táctil para adaptar la interacción
+  var esMovil = window.matchMedia('(pointer: coarse)').matches;
+
   // ── Crear zona interactiva para cada sala ──────────────────────────────────
   Object.values(SALAS).forEach(function (sala) {
     if (!sala.bounds && !sala.polygon) return;
@@ -58,29 +61,28 @@
 
     rect.addTo(map);
 
-    // Tooltip con nombre al pasar el cursor
-    rect.bindTooltip(sala.nombre, {
-      className: 'sala-tooltip',
-      direction: 'top',
-      sticky:    true,
-      offset:    [0, -6]
-    });
+    // Tooltip y hover sólo en escritorio (no hay hover en táctil)
+    if (!esMovil) {
+      rect.bindTooltip(sala.nombre, {
+        className: 'sala-tooltip',
+        direction: 'top',
+        sticky:    true,
+        offset:    [0, -6]
+      });
 
-    // Hover: muestra el panel con la foto y los datos de la sala
-    rect.on('mouseover', function () {
-      abrirPanel(sala, this);
-    });
+      rect.on('mouseover', function () {
+        abrirPanel(sala, this);
+      });
+    }
 
-    // Al salir de la zona, el panel permanece abierto.
-    // Se cierra haciendo clic en el mapa vacío o con el botón ×.
-    rect.on('mouseout', function () {
-      // el highlight se mantiene mientras sea la sala activa
-    });
-
-    // Clic: navegar directamente a la ficha completa de la sala
+    // Clic: en móvil abre el panel (bottom sheet); en escritorio navega directo
     rect.on('click', function (e) {
       L.DomEvent.stopPropagation(e);
-      window.location.href = 'sala.html?sala=' + sala.id;
+      if (esMovil) {
+        abrirPanel(sala, this);
+      } else {
+        window.location.href = 'sala.html?sala=' + sala.id;
+      }
     });
 
     // Guardar referencia para poder manipularla desde el panel
@@ -126,6 +128,10 @@
     placeholder.style.display = 'none';
     foto.src = sala.foto;
     foto.alt = sala.nombre;
+
+    // Enlace "Ver ficha completa" (esencial en móvil)
+    var verFicha = document.getElementById('panel-ver-ficha');
+    if (verFicha) verFicha.href = 'sala.html?sala=' + sala.id;
 
     // Mostrar panel y avisar a Leaflet del cambio de tamaño
     panelWrapper.classList.remove('oculto');
