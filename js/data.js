@@ -273,7 +273,7 @@ const SALAS = {
     id: "cocina",
     nombre: "Cocina",
     foto: "img/salas/San_Antonio_el_Real_-_Cocina.jpg",
-    bounds: [[-762, 774], [-657, 844]],
+    bounds: [[-708, 872], [-799, 904]],
     funcion: "Lugar de preparación de alimentos, reparto de raciones y trabajo doméstico.",
     uso_dramatico: "",
     objeto: "",
