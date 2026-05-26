@@ -42,16 +42,19 @@
 
   // ── Crear zona interactiva para cada sala ──────────────────────────────────
   Object.values(SALAS).forEach(function (sala) {
-    if (!sala.bounds) return;
+    if (!sala.bounds && !sala.polygon) return;
 
-    var rect = L.rectangle(sala.bounds, {
-      color:       '#8B2828',
+    var shapeOpts = {
+      color:       '#2E7D32',
       weight:      2,
-      fillColor:   '#8B2828',
+      fillColor:   '#2E7D32',
       fillOpacity: 0,
       opacity:     0,
       interactive: true
-    });
+    };
+    var rect = sala.polygon
+      ? L.polygon(sala.polygon, shapeOpts)
+      : L.rectangle(sala.bounds, shapeOpts);
 
     rect.addTo(map);
 
@@ -123,9 +126,6 @@
     placeholder.style.display = 'none';
     foto.src = sala.foto;
     foto.alt = sala.nombre;
-
-    // Enlace a la ficha completa
-    document.getElementById('panel-link').href = 'sala.html?sala=' + sala.id;
 
     // Mostrar panel y avisar a Leaflet del cambio de tamaño
     panelWrapper.classList.remove('oculto');

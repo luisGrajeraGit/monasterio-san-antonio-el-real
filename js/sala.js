@@ -69,6 +69,73 @@
       placeholder.style.display = 'flex';
     };
 
+    // ── Lightbox + badge de fotos ───────────────────────────
+    var todasLasFotos = [sala.foto].concat(sala.fotos || []).filter(Boolean);
+    var lbActual  = 0;   // índice de la foto actualmente visible
+
+    // ── Lightbox ───────────────────────────────────────────────
+    var lightboxEl  = document.getElementById('sala-lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var btnCerrar   = document.getElementById('lightbox-cerrar');
+    var btnPrevLb   = document.getElementById('lightbox-prev');
+    var btnNextLb   = document.getElementById('lightbox-next');
+
+    function abrirLightbox(idx) {
+      lbActual = idx;
+      lightboxImg.src = todasLasFotos[lbActual];
+      lightboxImg.alt = sala.nombre;
+      btnPrevLb.classList.toggle('oculto', lbActual === 0);
+      btnNextLb.classList.toggle('oculto', lbActual === todasLasFotos.length - 1);
+      lightboxEl.classList.add('abierto');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarLightbox() {
+      lightboxEl.classList.remove('abierto');
+      document.body.style.overflow = '';
+    }
+
+    btnCerrar.addEventListener('click', cerrarLightbox);
+    lightboxEl.addEventListener('click', function (e) {
+      if (e.target === lightboxEl) cerrarLightbox();
+    });
+    btnPrevLb.addEventListener('click', function () {
+      if (lbActual > 0) abrirLightbox(lbActual - 1);
+    });
+    btnNextLb.addEventListener('click', function () {
+      if (lbActual < todasLasFotos.length - 1) abrirLightbox(lbActual + 1);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!lightboxEl.classList.contains('abierto')) return;
+      if (e.key === 'Escape')      cerrarLightbox();
+      if (e.key === 'ArrowLeft'  && lbActual > 0)                         abrirLightbox(lbActual - 1);
+      if (e.key === 'ArrowRight' && lbActual < todasLasFotos.length - 1) abrirLightbox(lbActual + 1);
+    });
+
+    // Clic en la foto de cabecera → abrir lightbox
+    foto.style.cursor = 'zoom-in';
+    foto.addEventListener('click', function () { abrirLightbox(lbActual); });
+
+    // Badge de contador (sólo cuando hay varias fotos)
+    if (todasLasFotos.length > 1) {
+      var badge = document.createElement('button');
+      badge.className = 'foto-badge';
+      badge.setAttribute('aria-label', 'Ver galería (' + todasLasFotos.length + ' fotos)');
+      badge.innerHTML =
+        '<svg width="13" height="11" viewBox="0 0 13 11" fill="none" ' +
+        'stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">' +
+        '<rect x="0.6" y="2.4" width="11.8" height="8" rx="1"/>' +
+        '<circle cx="6.5" cy="6.5" r="2"/>' +
+        '<path d="M4.6 2.4 L5.3 0.6 L7.7 0.6 L8.4 2.4" stroke-linejoin="round"/>' +
+        '</svg>' +
+        todasLasFotos.length + '&thinsp;fotos';
+      document.querySelector('.sala-foto-wrap').appendChild(badge);
+      badge.addEventListener('click', function (e) {
+        e.stopPropagation();
+        abrirLightbox(0);
+      });
+    }
+
     // Secciones de contenido
     var campos = [
       { clave: 'funcion',       label: 'Función histórica' },
