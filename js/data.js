@@ -317,6 +317,7 @@ const SALAS = {
   "sala-cuadrada": {
     id: "sala-cuadrada",
     nombre: "Sala Cuadrada",
+    foto: "img/salas/San_Antonio_el_Real_-_Sala_Cuadrada_01.webp",
     polygon: [[-922, 764], [-941, 830], [-1006, 814], [-990, 748]],
     funcion: "Sala polivalente para reunión, recepción o uso doméstico según las necesidades del convento.",
     objetos: ["mesa", "sillas", "bancos", "arca", "candil", "caja de documentos", "paños", "cesto", "atril pequeño", "jarra de agua"],
@@ -326,7 +327,6 @@ const SALAS = {
   "establo": {
     id: "establo",
     nombre: "Establo",
-    foto: "img/salas/San_Antonio_el_Real_-_Establo_01.webp",
     polygon: [[-971, 627], [-1018, 810], [-1061, 801], [-1014, 617]],
     funcion: "Dependencia de servicio para animales, aperos y trabajos ligados al abastecimiento.",
     objetos: ["pesebre", "paja", "heno", "cubo", "cuerda", "arneses", "silla de montar", "escoba", "horca", "azada", "sacos", "farol"],
