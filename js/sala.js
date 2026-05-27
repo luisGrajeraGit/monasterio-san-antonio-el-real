@@ -138,16 +138,26 @@
 
     // Secciones de contenido
     var campos = [
-      { clave: 'funcion',       label: 'Función histórica' },
-      { clave: 'uso_dramatico', label: 'Uso dramático'     },
-      { clave: 'objeto',        label: 'Objeto'            },
-      { clave: 'descripcion',   label: 'Notas'             }
+      { clave: 'funcion',     label: 'Función histórica' },
+      { clave: 'objetos',     label: 'Atrezzo'           },
+      { clave: 'descripcion', label: 'Notas'             }
     ];
 
     var html = campos.map(function (c) {
-      var texto    = sala[c.clave];
-      var clase    = texto ? 'sala-seccion-texto' : 'sala-seccion-texto vacio';
-      var contenido = texto || 'Sin información';
+      var valor = sala[c.clave];
+      var clase, contenido;
+      if (Array.isArray(valor) && valor.length) {
+        clase     = 'sala-seccion-texto sala-objetos';
+        contenido = valor.map(function (o) {
+          return '<span class="objeto-tag">' + o + '</span>';
+        }).join('');
+      } else if (valor) {
+        clase     = 'sala-seccion-texto';
+        contenido = valor;
+      } else {
+        clase     = 'sala-seccion-texto vacio';
+        contenido = 'Sin información';
+      }
       return (
         '<div class="sala-seccion">' +
           '<div class="sala-seccion-label">' + c.label + '</div>' +

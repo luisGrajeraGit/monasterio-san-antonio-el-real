@@ -105,21 +105,25 @@
     document.getElementById('panel-nombre').textContent = sala.nombre;
 
     // Campos de texto
-    var campos = [
-      { campo: 'funcion',       elId: 'panel-funcion'   },
-      { campo: 'uso_dramatico', elId: 'panel-dramatico' },
-      { campo: 'objeto',        elId: 'panel-objeto'    }
-    ];
-    campos.forEach(function (c) {
-      var el = document.getElementById(c.elId);
-      if (sala[c.campo]) {
-        el.textContent = sala[c.campo];
-        el.classList.remove('vacio');
-      } else {
-        el.textContent = '—';
-        el.classList.add('vacio');
-      }
-    });
+    // funcion
+    var elFuncion = document.getElementById('panel-funcion');
+    if (sala.funcion) {
+      elFuncion.textContent = sala.funcion;
+      elFuncion.classList.remove('vacio');
+    } else {
+      elFuncion.textContent = '—';
+      elFuncion.classList.add('vacio');
+    }
+
+    // atrezzo (array de objetos)
+    var elAtrezzo = document.getElementById('panel-atrezzo');
+    if (Array.isArray(sala.objetos) && sala.objetos.length) {
+      elAtrezzo.textContent = sala.objetos.join(', ');
+      elAtrezzo.classList.remove('vacio');
+    } else {
+      elAtrezzo.textContent = '—';
+      elAtrezzo.classList.add('vacio');
+    }
 
     // Foto
     var foto        = document.getElementById('panel-foto');

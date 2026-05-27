@@ -494,6 +494,21 @@ a { color: inherit; }
   font-style: italic;
 }
 
+.sala-objetos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  line-height: normal;
+}
+.objeto-tag {
+  font-size: 0.82rem;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text);
+  background: transparent;
+}
+
 /* Navegación inferior entre salas */
 .sala-nav-inferior {
   display: flex;
