@@ -166,15 +166,67 @@
   window.cerrarPanel = cerrarPanel;
 
   // ── Toggle del mapa en móvil ───────────────────────────────────────────────
+  // Altura personalizada del mapa guardada tras arrastrar (null = usar CSS)
+  var mapaHeightPx = null;
+
   function toggleMapa() {
     var mapEl    = document.getElementById('map');
     var chevron  = document.getElementById('mapa-chevron');
     var colapsado = mapEl.classList.toggle('mapa-colapsado');
+    if (colapsado) {
+      // Al colapsar: limpiar el inline style para que height:0 del class funcione
+      mapEl.style.height = '';
+    } else if (mapaHeightPx !== null) {
+      // Al expandir: restaurar la altura personalizada si la había
+      mapEl.style.height = mapaHeightPx + 'px';
+    }
     // Chevron: apunta arriba (⌃) cuando el mapa está visible, abajo (⌄) cuando colapsado
     if (chevron) chevron.style.transform = colapsado ? 'rotate(180deg)' : '';
     setTimeout(function () { map.invalidateSize(); }, 370);
   }
   window.toggleMapa = toggleMapa;
+
+  // ── Divisor arrastrable entre mapa y panel (móvil) ────────────────────────
+  if (esMovil) {
+    var dividerEl = document.getElementById('drag-divider');
+    var mapElDrag = document.getElementById('map');
+
+    if (dividerEl && mapElDrag) {
+      var dragStartY = 0;
+      var dragStartH = 0;
+
+      dividerEl.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        // Si el mapa está colapsado, expandirlo primero
+        if (mapElDrag.classList.contains('mapa-colapsado')) {
+          mapElDrag.classList.remove('mapa-colapsado');
+          var chevron = document.getElementById('mapa-chevron');
+          if (chevron) chevron.style.transform = '';
+          mapElDrag.style.height = (mapaHeightPx || Math.round(window.innerHeight * 0.38)) + 'px';
+        }
+        dragStartY = e.touches[0].clientY;
+        dragStartH = mapElDrag.getBoundingClientRect().height;
+        mapElDrag.style.transition = 'none'; // desactivar animación durante drag
+      }, { passive: false });
+
+      dividerEl.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+        var dy     = e.touches[0].clientY - dragStartY;
+        var mainH  = mapElDrag.parentElement
+                       ? mapElDrag.parentElement.getBoundingClientRect().height
+                       : window.innerHeight;
+        var newH   = Math.max(80, Math.min(dragStartH + dy, mainH - 100));
+        mapElDrag.style.height = newH + 'px';
+        map.invalidateSize();
+      }, { passive: false });
+
+      dividerEl.addEventListener('touchend', function () {
+        mapElDrag.style.transition = ''; // restaurar animación
+        mapaHeightPx = mapElDrag.getBoundingClientRect().height; // guardar altura
+        map.invalidateSize();
+      });
+    }
+  }
 
   // ── Modo debug: pulsa D para ver coordenadas en tiempo real ───────────────
   //
