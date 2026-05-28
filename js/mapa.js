@@ -137,6 +137,10 @@
     var verFicha = document.getElementById('panel-ver-ficha');
     if (verFicha) verFicha.href = 'sala.html?sala=' + sala.id;
 
+    // Nombre de sala también navega a la ficha
+    var nombreLink = document.getElementById('panel-nombre-link');
+    if (nombreLink) nombreLink.href = 'sala.html?sala=' + sala.id;
+
     // Mostrar panel y avisar a Leaflet del cambio de tamaño
     panelWrapper.classList.remove('oculto');
     setTimeout(function () { map.invalidateSize(); }, 340);

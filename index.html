@@ -84,7 +84,9 @@
         <!-- Info de la sala -->
         <div class="panel-info">
           <div class="panel-header">
-            <h2 id="panel-nombre" class="panel-nombre"></h2>
+            <a id="panel-nombre-link" class="panel-nombre-link" href="#">
+              <h2 id="panel-nombre" class="panel-nombre"></h2>
+            </a>
             <button class="panel-cerrar" onclick="cerrarPanel()" title="Cerrar panel">×</button>
           </div>
 
@@ -96,14 +98,14 @@
             <dd id="panel-atrezzo" class="vacio">—</dd>
           </dl>
 
-          <a id="panel-ver-ficha" class="panel-btn-ficha" href="#">
-            Ver ficha completa
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-
         </div>
 
       </div><!-- /#panel -->
+
+      <a id="panel-ver-ficha" class="panel-btn-ficha" href="#">
+        Ver ficha completa
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div><!-- /#panel-wrapper -->
 
   </main>
