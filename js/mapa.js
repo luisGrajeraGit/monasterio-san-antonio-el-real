@@ -187,19 +187,22 @@
   window.toggleMapa = toggleMapa;
 
   // ── Divisor arrastrable entre mapa y panel (móvil) ────────────────────────
-  // Los eventos se enganchan siempre; la visibilidad la controla el CSS.
+  // Usa Pointer Events + setPointerCapture para funcionar en iOS Safari,
+  // que ignora overflow:hidden en body y puede ignorar preventDefault en touchmove.
   (function () {
     var dividerEl = document.getElementById('drag-divider');
     var mapElDrag = document.getElementById('map');
 
     if (!dividerEl || !mapElDrag) return;
 
+    // touch-action:none es imprescindible para que pointermove no quede bloqueado
+    dividerEl.style.touchAction = 'none';
+
     var isDragging = false;
     var dragStartY = 0;
     var dragStartH = 0;
 
-    dividerEl.addEventListener('touchstart', function (e) {
-      e.preventDefault();
+    dividerEl.addEventListener('pointerdown', function (e) {
       // Si el mapa está colapsado, expandirlo primero
       if (mapElDrag.classList.contains('mapa-colapsado')) {
         mapElDrag.classList.remove('mapa-colapsado');
@@ -207,70 +210,36 @@
         if (chevron) chevron.style.transform = '';
         mapElDrag.style.height = (mapaHeightPx || Math.round(window.innerHeight * 0.38)) + 'px';
       }
-      isDragging  = true;
-      dragStartY  = e.touches[0].clientY;
-      dragStartH  = mapElDrag.getBoundingClientRect().height;
+      isDragging = true;
+      dragStartY = e.clientY;
+      dragStartH = mapElDrag.getBoundingClientRect().height;
       mapElDrag.style.transition = 'none';
-      // Bloquear scroll del documento durante el drag
-      document.body.style.touchAction = 'none';
-      document.body.style.overflow    = 'hidden';
-    }, { passive: false });
+      // Captura todos los eventos de este puntero/dedo en nuestro elemento,
+      // sacándolos del sistema de scroll del navegador
+      dividerEl.setPointerCapture(e.pointerId);
+    });
 
-    // touchmove en document para capturarlo aunque el navegador ya haya
-    // comprometido el gesto de scroll antes de que pudiéramos cancelarlo
-    document.addEventListener('touchmove', function (e) {
+    dividerEl.addEventListener('pointermove', function (e) {
       if (!isDragging) return;
       e.preventDefault();
-      var dy    = e.touches[0].clientY - dragStartY;
+      var dy    = e.clientY - dragStartY;
       var mainH = mapElDrag.parentElement
                     ? mapElDrag.parentElement.getBoundingClientRect().height
                     : window.innerHeight;
       var newH  = Math.max(80, Math.min(dragStartH + dy, mainH - 100));
       mapElDrag.style.height = newH + 'px';
       map.invalidateSize();
-    }, { passive: false });
+    });
 
     function endDrag() {
       if (!isDragging) return;
       isDragging = false;
-      mapElDrag.style.transition      = '';
-      document.body.style.touchAction = '';
-      document.body.style.overflow    = '';
+      mapElDrag.style.transition = '';
       mapaHeightPx = mapElDrag.getBoundingClientRect().height;
       map.invalidateSize();
     }
-    document.addEventListener('touchend',    endDrag);
-    document.addEventListener('touchcancel', endDrag);
-
-    // Soporte ratón para pruebas en escritorio
-    dividerEl.addEventListener('mousedown', function (e) {
-      dragStartY = e.clientY;
-      dragStartH = mapElDrag.getBoundingClientRect().height;
-      mapElDrag.style.transition     = 'none';
-      document.body.style.userSelect = 'none';
-      document.body.style.cursor     = 'ns-resize';
-
-      function onMove(ev) {
-        var dy    = ev.clientY - dragStartY;
-        var mainH = mapElDrag.parentElement
-                      ? mapElDrag.parentElement.getBoundingClientRect().height
-                      : window.innerHeight;
-        var newH  = Math.max(80, Math.min(dragStartH + dy, mainH - 100));
-        mapElDrag.style.height = newH + 'px';
-        map.invalidateSize();
-      }
-      function onUp() {
-        mapElDrag.style.transition     = '';
-        document.body.style.userSelect = '';
-        document.body.style.cursor     = '';
-        mapaHeightPx = mapElDrag.getBoundingClientRect().height;
-        map.invalidateSize();
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onUp);
-      }
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-    });
+    dividerEl.addEventListener('pointerup',     endDrag);
+    dividerEl.addEventListener('pointercancel', endDrag);
   }());
 
   // ── Modo debug: pulsa D para ver coordenadas en tiempo real ───────────────
