@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node test.js \"\" \"http://127.0.0.1:8000/index.html\")",
+      "Bash(sudo -n ss -ltnp)",
+      "Bash(curl -s -m 3 http://127.0.0.1:8080/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s -m 3 http://127.0.0.1:8080/)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{url_effective}\\\\n\" http://127.0.0.1:8000/favicon.ico)",
+      "Bash(sed -i \"s/height: 200/height: 400/\" screenshot2.js)",
+      "Bash(node screenshot2.js)",
+      "Bash(sort -t: -k1 -n)",
+      "Bash(node /tmp/claude-1000/-mnt-cine-Proyectos-actuales-silencio-Monasterio-de-San-Antonio-el-Real-WEB/a74ec449-5cdd-43b2-8dad-6892706c62c1/scratchpad/mobile.js)",
+      "Bash(git add *)",
+      "Bash(node /tmp/claude-1000/-mnt-cine-Proyectos-actuales-silencio-Monasterio-de-San-Antonio-el-Real-WEB/a74ec449-5cdd-43b2-8dad-6892706c62c1/scratchpad/test_divider.js)"
+    ]
+  }
+}

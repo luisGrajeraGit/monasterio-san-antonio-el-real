@@ -4,6 +4,11 @@
 
 (function () {
 
+  // iOS Safari: bloquear scroll de html/body para evitar que el browser dispare
+  // pointercancel al intentar scrollear la página durante el drag del divisor
+  document.documentElement.style.height   = '100%';
+  document.documentElement.style.overflow = 'hidden';
+
   // ── Dimensiones reales de la imagen del plano ──────────────────────────────
   const IMG_W = 1462;
   const IMG_H = 1076;
@@ -164,6 +169,53 @@
 
   // Exponer globalmente para el onclick del HTML
   window.cerrarPanel = cerrarPanel;
+
+  // ── Salas sin ubicar en el plano (sin bounds/polygon) ──────────────────────
+  // Se listan aquí para que sigan siendo accesibles aunque no tengan zona
+  // dibujada en el mapa. La lista se genera sola: cualquier sala futura sin
+  // bounds/polygon aparece automáticamente, sin tocar este código.
+  (function () {
+    var salasSinUbicar = Object.values(SALAS).filter(function (sala) {
+      return !sala.bounds && !sala.polygon;
+    });
+
+    var btn    = document.getElementById('btn-sin-ubicar');
+    var lista  = document.getElementById('lista-sin-ubicar');
+    var badge  = document.getElementById('contador-sin-ubicar');
+    if (!btn || !lista || !badge || !salasSinUbicar.length) return;
+
+    badge.textContent = salasSinUbicar.length;
+    btn.classList.remove('oculto');
+
+    salasSinUbicar.forEach(function (sala) {
+      var link = document.createElement('a');
+      link.href = 'sala.html?sala=' + sala.id;
+      link.textContent = sala.nombre;
+      lista.appendChild(link);
+    });
+
+    function cerrarLista() {
+      lista.classList.add('oculto');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var abierta = !lista.classList.contains('oculto');
+      if (abierta) {
+        cerrarLista();
+      } else {
+        lista.classList.remove('oculto');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!lista.classList.contains('oculto') && !lista.contains(e.target) && e.target !== btn) {
+        cerrarLista();
+      }
+    });
+  }());
 
   // ── Toggle del mapa en móvil ───────────────────────────────────────────────
   // Altura personalizada del mapa guardada tras arrastrar (null = usar CSS)

@@ -23,6 +23,17 @@
 /* ── Reset ──────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
+/* html + body sin scroll en la página del mapa (iOS Safari necesita esto
+   para no disparar pointercancel al arrastrar el divisor) */
+html:has(body.pagina-mapa) {
+  height: 100%;
+  overflow: hidden;
+}
+body.pagina-mapa {
+  overflow: hidden;
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -45,7 +56,7 @@ a { color: inherit; }
   border-bottom: 1px solid var(--border-acc);
   background: var(--bg);
   position: relative;
-  z-index: 200;
+  z-index: 1100;
   flex-shrink: 0;
 }
 
@@ -83,6 +94,67 @@ a { color: inherit; }
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   color: var(--text-muted);
+}
+
+/* ── Salas sin ubicar en el plano (index.html) ─────────────────── */
+.sin-ubicar-wrap {
+  position: relative;
+}
+
+.btn-sin-ubicar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-sin-ubicar:hover,
+.btn-sin-ubicar[aria-expanded="true"] {
+  color: var(--text);
+  border-color: var(--border-acc);
+}
+.btn-sin-ubicar.oculto { display: none; }
+
+.badge-sin-ubicar {
+  color: var(--accent-h);
+}
+
+.lista-sin-ubicar {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+  z-index: 250;
+  padding: 6px;
+}
+.lista-sin-ubicar.oculto { display: none; }
+
+.lista-sin-ubicar a {
+  display: block;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--text);
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+.lista-sin-ubicar a:hover {
+  background: var(--surface-2);
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -594,11 +666,19 @@ a { color: inherit; }
   /* Cabecera más compacta */
   :root { --header-h: 48px; }
 
-  .site-header { padding: 0 16px; }
+  .site-header { padding: 0 16px; gap: 10px; }
   .site-header h1 {
     font-size: 0.72rem;
     letter-spacing: 0.14em;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+  .site-header .proyecto { display: none; }
+  .sin-ubicar-wrap { flex-shrink: 0; }
+  .btn-sin-ubicar { font-size: 0.62rem; padding: 5px 9px; white-space: nowrap; }
+  .lista-sin-ubicar { right: 0; left: auto; }
 
   /* ── Vista dividida: mapa arriba / info abajo ───────────── */
   .pagina-mapa main { flex-direction: column; }
@@ -606,7 +686,7 @@ a { color: inherit; }
   /* Mapa: altura fija, colapsable */
   #map {
     height: 38vh;
-    flex-shrink: 0;
+    flex: 0 0 auto;
     transition: height 0.36s cubic-bezier(0.4, 0, 0.2, 1);
   }
   #map.mapa-colapsado { height: 0; }

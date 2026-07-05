@@ -42,17 +42,17 @@
 // ──────────────────────────────────────────────────────────────────────────────
 
 const SALAS = {
-/*
+
   "panteon": {
     id: "panteon",
     nombre: "Panteón",
-    foto: "img/salas/San_Antonio_el_Real_-_Panteon.jpg",
-    bounds: [[-156, 607], [-32, 717]],
-    funcion: "Espacio funerario y memorial, vinculado a la conservación de restos, linajes y memoria religiosa.",
+    foto: "img/salas/San_Antonio_el_Real_-_Panteon_01.webp",
+    bounds: [[-58, 698], [-166, 766]],
+    funcion: "Espacio funerario y memorial, vinculado a la conservación de restos, linajes y memoria religiosa. Tiene unas mesas de resrtauración. Suelo en bruto, sin rematar",
     objetos: ["lápidas", "paños negros", "velas", "candelabros bajos", "crucifijo", "relicario", "libro de difuntas", "flores secas"],
     descripcion: ""
   },
-
+/*
   "capilla-mayor": {
     id: "capilla-mayor",
     nombre: "Capilla Mayor",
@@ -62,12 +62,12 @@ const SALAS = {
     objetos: ["altar", "mantel de altar", "crucifijo", "candeleros", "sagrario", "atril", "misal", "vinajeras", "cáliz", "patena", "floreros"],
     descripcion: ""
   },
-
+*/
   "sacristia": {
     id: "sacristia",
     nombre: "Sacristía",
-    foto: "img/salas/San_Antonio_el_Real_-_Sacristia.jpg",
-    bounds: [[-298, 558], [-185, 640]],
+    foto: "img/salas/San_Antonio_el_Real_-_Sacristia_01.webp",
+    bounds: [[-220, 585], [-287, 673]],
     funcion: "Sala de preparación y custodia de ornamentos, vasos sagrados y objetos litúrgicos.",
     objetos: ["casullas", "albas", "amitos", "cíngulos", "estolas", "corporales", "purificadores", "cáliz", "patena", "copón", "vinajeras", "lavabo", "armario de ornamentos", "arca con llave"],
     descripcion: ""
@@ -76,8 +76,11 @@ const SALAS = {
   "sala-capitular": {
     id: "sala-capitular",
     nombre: "Sala Capitular",
-    foto: "img/salas/San_Antonio_el_Real_-_Sala_Capitular.jpg",
-    bounds: [[-298, 649], [-185, 730]],
+    foto: "img/salas/San_Antonio_el_Real_-_Sala_Capitular_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Sala_Capitular_02.webp",
+    ],
+    bounds: [[-222, 682], [-306, 764]],
     funcion: "Espacio de reunión comunitaria, lectura de la regla, gobierno interno y corrección de faltas.",
     objetos: ["bancos corridos", "sitial de la abadesa", "mesa pequeña", "libro de regla", "libro de actas", "campanilla", "crucifijo mural", "urna de votación", "llaves"],
     descripcion: ""
@@ -86,8 +89,12 @@ const SALAS = {
   "sala-de-los-frailes": {
     id: "sala-de-los-frailes",
     nombre: "Sala de los Frailes",
-    foto: "img/salas/San_Antonio_el_Real_-_Sala_de_los_Frailes.jpg",
-    bounds: [[-298, 739], [-185, 822]],
+    foto: "img/salas/San_Antonio_el_Real_-_Sala_de_los_Frailes_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Sala_de_los_Frailes_02.webp",
+      "img/salas/San_Antonio_el_Real_-_Sala_de_los_Frailes_03.webp"
+    ],
+    bounds: [[-224, 786], [-304, 897]],
     funcion: "Estancia vinculada a la presencia masculina autorizada, asistencia religiosa o usos conventuales externos.",
     objetos: ["banco de espera", "mesa sobria", "sillas", "crucifijo", "aguamanil", "jarra", "cuenco", "libros devotos", "capa o manteo colgado"],
     descripcion: ""
@@ -96,17 +103,17 @@ const SALAS = {
   "almacen-de-paso": {
     id: "almacen-de-paso",
     nombre: "Almacén de Paso",
-    foto: "img/salas/San_Antonio_el_Real_-_Almacen_de_Paso.jpg",
-    bounds: [[-298, 836], [-185, 918]],
+    foto: "img/salas/San_Antonio_el_Real_-_Almacen_de_Paso_01.webp",
+    bounds: [[-222, 973], [-308, 913]],
     funcion: "Zona auxiliar de tránsito y depósito temporal de objetos, materiales o provisiones.",
     objetos: ["cestas", "sacos", "cuerdas", "candiles", "escobas", "cubos", "tablas", "herramientas pequeñas", "paños doblados", "cajas de madera"],
     descripcion: ""
   },
-
+/*
   "almacen": {
     id: "almacen",
     nombre: "Almacén",
-    foto: "img/salas/San_Antonio_el_Real_-_Almacen.jpg",
+    foto: "img/salas/San_Antonio_el_Real_-_Almacen_01.webp",
     bounds: [[-242, 1005], [-152, 1160]],
     funcion: "Espacio de guarda de bienes, herramientas, enseres y materiales de uso cotidiano.",
     objetos: ["arcones", "estanterías", "sacos de grano", "tinajas", "velas", "aceite", "jabón", "lino", "lana", "herramientas", "cestos", "llaves"],
@@ -116,23 +123,23 @@ const SALAS = {
   "hornos": {
     id: "hornos",
     nombre: "Hornos",
-    foto: "img/salas/San_Antonio_el_Real_-_Hornos.jpg",
+    foto: "img/salas/San_Antonio_el_Real_-_Hornos_01.webp",
     bounds: [[-308, 1218], [-132, 1435]],
     funcion: "Zona de cocción, panificación y preparación de alimentos mediante fuego.",
     objetos: ["horno de leña", "palas de pan", "artesa", "cedazos", "sacos de harina", "leña", "brasero", "tenazas", "cántaros", "paños de cocina", "bandejas de barro"],
     descripcion: ""
   },
-
+*/
   "patio-de-la-vicaria": {
     id: "patio-de-la-vicaria",
     nombre: "Patio de la Vicaría",
-    foto: "img/salas/San_Antonio_el_Real_-_Patio_de_la_Vicaria.jpg",
-    bounds: [[-398, 30], [-200, 265]],
+    foto: "img/salas/San_Antonio_el_Real_-_Patio_de_la_Vicaria_01.webp",
+    polygon: [[-236, 214], [-246, 406], [-370, 402], [-356, 206]],
     funcion: "Patio asociado a dependencias de gestión, tránsito y relación con ámbitos administrativos o eclesiásticos.",
     objetos: ["banco de piedra", "cántaro", "farol", "macetas", "escoba de palma", "cubo", "llavero", "papeles doblados", "sello", "cordón de clausura"],
     descripcion: ""
   },
-*/
+
   "iglesia": {
     id: "iglesia",
     nombre: "Iglesia",
@@ -161,6 +168,9 @@ const SALAS = {
     id: "claustro-del-nogal",
     nombre: "Claustro del Nogal",
     foto: "img/salas/San_Antonio_el_Real_-_Claustro_del_Nogal_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Claustro_del_Nogal_02.webp"
+    ],
     bounds: [[-252, 1011], [-525, 1276]],
     funcion: "Patio interior ajardinado, lugar de paso, trabajo ligero, espera y respiración dentro de la clausura.",
     objetos: ["nogal", "banco", "cántaro", "cubo", "azada pequeña", "tijeras de podar", "cesta de mimbre", "hojas secas", "hierbas", "farol"],
@@ -243,37 +253,41 @@ const SALAS = {
     objetos: ["bancos", "mesas pequeñas", "libro de regla", "catecismo", "rosarios", "velo de novicia", "costurero", "aguja", "hilo", "tablillas de escritura", "vela", "crucifijo"],
     descripcion: ""
   },
-
+*/
   "jardin-de-la-enfermeria": {
     id: "jardin-de-la-enfermeria",
     nombre: "Jardín de la Enfermería",
-    foto: "img/salas/San_Antonio_el_Real_-_Jardin_de_la_Enfermeria.jpg",
-    bounds: [[-762, 574], [-657, 764]],
+    foto: "img/salas/San_Antonio_el_Real_-_Jardin_de_la_Enfermeria_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Jardin_de_la_Enfermeria_02.webp",
+      "img/salas/San_Antonio_el_Real_-_Jardin_de_la_Enfermeria_03.webp"
+    ],
+    polygon: [[-852, 666], [-654, 668], [-652, 866], [-790, 860], [-792, 832], [-888, 802]],
     funcion: "Patio asociado al cuidado, la convalecencia y el uso de plantas o remedios.",
     objetos: ["hierbas medicinales", "macetas", "mortero", "cesto", "paños", "jarra de agua", "banco", "tijeras", "vendas", "cuenco", "ramilletes secos"],
     descripcion: ""
   },
-*/
+
   "cocina": {
     id: "cocina",
     nombre: "Cocina",
-    foto: "img/salas/San_Antonio_el_Real_-_Cocina.jpg",
+    foto: "img/salas/San_Antonio_el_Real_-_Cocina_01.webp",
     bounds: [[-708, 872], [-799, 904]],
     funcion: "Lugar de preparación de alimentos, reparto de raciones y trabajo doméstico.",
     objetos: ["fogón", "ollas de barro", "calderos de cobre", "sartenes", "cucharones", "cuchillos", "mortero", "tabla de cortar", "leña", "cántaros", "tinajas", "paños", "delantales"],
     descripcion: ""
   },
-/*
+
   "comedor": {
     id: "comedor",
     nombre: "Comedor",
-    foto: "img/salas/San_Antonio_el_Real_-_Comedor.jpg",
-    bounds: [[-762, 852], [-657, 922]],
+    foto: "img/salas/San_Antonio_el_Real_-_Comedor_01.webp",
+    bounds: [[-692, 919], [-792, 959]],
     funcion: "Estancia auxiliar para comidas, servicio o usos domésticos ligados a la alimentación.",
     objetos: ["mesa auxiliar", "bancos", "jarras", "escudillas", "bandejas", "panera", "paños", "jarro de agua", "cesta", "armario bajo"],
     descripcion: ""
   },
-
+/*
   "acceso": {
     id: "acceso",
     nombre: "Acceso",
@@ -298,6 +312,9 @@ const SALAS = {
     id: "locutorios",
     nombre: "Locutorios",
     foto: "img/salas/San_Antonio_el_Real_-_Locutorios_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Locutorios_02.webp"
+    ],
     polygon: [[-863, 540], [-868, 572], [-1053, 531], [-1045, 497]],
     funcion: "Espacio de comunicación vigilada a través de rejas, destinado a visitas, mensajes y asuntos externos.",
     objetos: ["rejas dobles", "sillas", "bancos", "crucifijo", "mesa estrecha", "cortina", "campanilla", "torno pequeño", "carta", "rosario", "pañuelo", "cesta"],
@@ -327,9 +344,40 @@ const SALAS = {
   "establo": {
     id: "establo",
     nombre: "Establo",
+    foto: "img/salas/San_Antonio_el_Real_-_Establo_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Establo_02.webp",
+      "img/salas/San_Antonio_el_Real_-_Establo_03.webp"
+    ],
     polygon: [[-971, 627], [-1018, 810], [-1061, 801], [-1014, 617]],
     funcion: "Dependencia de servicio para animales, aperos y trabajos ligados al abastecimiento.",
     objetos: ["pesebre", "paja", "heno", "cubo", "cuerda", "arneses", "silla de montar", "escoba", "horca", "azada", "sacos", "farol"],
+    descripcion: ""
+  },
+
+  // ── Salas sin ubicar en el plano (sin bounds/polygon) ──────────────────────
+  // Aparecen automáticamente en el listado "Otras salas" de index.html y son
+  // accesibles por su ficha (sala.html?sala=...), pero no se dibujan en el mapa
+  // hasta que se les añada bounds o polygon.
+
+  "huerto-de-toxicos": {
+    id: "huerto-de-toxicos",
+    nombre: "Huerto de Tóxicos",
+    foto: "img/salas/San_Antonio_el_Real_-_Huerto_de_Toxicos_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Huerto_de_Toxicos_02.webp"
+    ],
+    funcion: "Huerto cercado dedicado al cultivo de plantas venenosas o de uso restringido, separado del resto de cultivos por su peligrosidad.",
+    objetos: ["plantas de hojas oscuras", "cercado bajo", "cartel o señal de aviso", "guantes", "cesto cerrado", "azada", "regadera", "libro de herboristería"],
+    descripcion: ""
+  },
+
+  "salon-de-los-libros": {
+    id: "salon-de-los-libros",
+    nombre: "Salón de los Libros",
+    foto: "img/salas/San_Antonio_el_Real_-_Salon_de_los_Libros_01.webp",
+    funcion: "Sala de estudio, copia y conservación de libros y manuscritos de la comunidad.",
+    objetos: ["estanterías", "libros encuadernados", "atril de lectura", "tintero", "plumas", "papel", "lupa", "vela", "escalera pequeña", "cajas de documentos"],
     descripcion: ""
   },
 /*

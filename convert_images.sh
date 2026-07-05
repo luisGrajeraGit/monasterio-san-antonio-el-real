@@ -21,13 +21,17 @@ for src in "$SALAS_DIR"/*.png "$SALAS_DIR"/*.PNG \
 
   base="${src%.*}"
   dst="${base}.webp"
+  nombre=$(basename "$src")
+
+  if [ -f "$dst" ] && [ "$dst" -nt "$src" ]; then
+    continue
+  fi
 
   size_antes=$(du -k "$src" | cut -f1)
 
   cwebp -q "$QUALITY" -resize "$MAX_W" 0 -mt "$src" -o "$dst" -quiet
 
   size_despues=$(du -k "$dst" | cut -f1)
-  nombre=$(basename "$src")
   echo "✓ $nombre  →  $(basename "$dst")   [ ${size_antes}K → ${size_despues}K ]"
 done
 
