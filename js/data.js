@@ -156,7 +156,8 @@ const SALAS = {
     foto: "img/salas/San_Antonio_el_Real_-_Claustro_Central_01.webp",
     fotos: [
       "img/salas/San_Antonio_el_Real_-_Claustro_Central_02.webp",
-      "img/salas/San_Antonio_el_Real_-_Claustro_Central_03.webp"
+      "img/salas/San_Antonio_el_Real_-_Claustro_Central_03.webp",
+      "img/salas/San_Antonio_el_Real_-_Claustro_Central_04.webp"
     ],
     bounds: [[-354, 634], [-516, 867]],
     funcion: "Centro de circulación interior, recogimiento y ordenamiento cotidiano de la comunidad.",
@@ -370,6 +371,26 @@ const SALAS = {
     funcion: "Huerto cercado dedicado al cultivo de plantas venenosas o de uso restringido, separado del resto de cultivos por su peligrosidad.",
     objetos: ["plantas de hojas oscuras", "cercado bajo", "cartel o señal de aviso", "guantes", "cesto cerrado", "azada", "regadera", "libro de herboristería"],
     descripcion: ""
+  },
+
+    "corredor-de-celdas": {
+    id: "corredor-de-celdas",
+    nombre: "Corredor de las celdas",
+    foto: "img/salas/San_Antonio_el_Real_-_Corredor_de_las_Celdas_01.webp",
+    funcion: "Corredor que lleva a las celdas antiguas de las hermanas.",
+    descripcion: "Pasillo que conecta las diferentes celdas del convento, utilizado por las monjas para acceder a sus habitaciones. Tiene una única ventana alta al fondo del corredor."
+  },
+
+    "ermita-de-santiago": {
+    id: "ermita-de-santiago",
+    nombre: "Ermita de Santiago",
+    foto: "img/salas/San_Antonio_el_Real_-_Ermita_de_Santiago_01.webp",
+    fotos: [
+      "img/salas/San_Antonio_el_Real_-_Ermita_de_Santiago_02.webp",
+      "img/salas/San_Antonio_el_Real_-_Ermita_de_Santiago_03.webp"
+    ],
+    funcion: "Ermita para rezar junto a las tumbas de las monjas enterradas en el exterior.",
+    descripcion: "Pequeña ermita con decoraciones muy coloridas y frescos en las paredes. Se encuentra junto al cementerio de las monjas y tiene un altar con una imagen de Santiago."
   },
 
   "salon-de-los-libros": {
