@@ -234,17 +234,17 @@ const SALAS = {
     objetos: ["mesas largas", "bancos", "escudillas", "cuencos", "jarras", "pan", "cuchillos romos", "servilletas de lino", "salero", "atril de lectura", "campanilla", "armario de vajilla"],
     descripcion: ""
   },
-/*
+
   "cilla": {
     id: "cilla",
     nombre: "Cilla",
-    foto: "img/salas/San_Antonio_el_Real_-_Cilla.jpg",
-    bounds: [[-647, 834], [-558, 966]],
+    foto: "img/salas/San_Antonio_el_Real_-_Cilla_01.webp",
+    bounds: [[-568, 918], [-640, 1007]],
     funcion: "Despensa o almacén de grano, alimentos y provisiones esenciales de la comunidad.",
     objetos: ["sacos de trigo", "sacos de cebada", "tinajas de aceite", "orzas", "quesos", "legumbres secas", "balanza", "pesas", "libro de cuentas", "llaves", "cucharón", "arca"],
     descripcion: ""
   },
-
+/*
   "noviciado": {
     id: "noviciado",
     nombre: "Noviciado",
