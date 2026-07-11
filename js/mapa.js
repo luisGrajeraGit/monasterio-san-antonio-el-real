@@ -30,7 +30,7 @@
   //   lng =  x_píxel
   const imageBounds = [[-IMG_H, 0], [0, IMG_W]];
   L.imageOverlay(
-    'img/San_Antonio_el_Real_-_Mapa_Quinta_de_el_Campillo.png',
+    'img/San_Antonio_el_Real_-_Mapa_Plan_Rodaje_2dias.png',
     imageBounds
   ).addTo(map);
 

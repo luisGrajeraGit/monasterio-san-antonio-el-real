@@ -50,7 +50,23 @@ const SALAS = {
     bounds: [[-58, 698], [-166, 766]],
     funcion: "Espacio funerario y memorial, vinculado a la conservación de restos, linajes y memoria religiosa. Tiene unas mesas de resrtauración. Suelo en bruto, sin rematar",
     objetos: ["lápidas", "paños negros", "velas", "candelabros bajos", "crucifijo", "relicario", "libro de difuntas", "flores secas"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 1 · 12:30-14:30 · Vida · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Danza de la novicia.</li><li>Personajes: NOV-B y 1-2 monjas de comunidad.</li><li>Bloque protegido para aprovechar el corte de luz en el suelo.</li></ul>"
+      },
+      {
+        titulo: "Puesta en escena",
+        contenido: "<ul><li>Plano secuencia con cámara fija: restauración, salida de acompañantes, baile y regreso rápido a la mesa.</li><li>Componer primero el plano general y colocar la mesa después.</li><li>Ensayar sin patear suelo; la primera toma buena es la del suelo más limpio.</li></ul>"
+      },
+      {
+        titulo: "Luz y cámara",
+        contenido: "<ul><li>Fuente principal: haz real de ventana sur, sin key artificial directa.</li><li>Opcionales: haze con permiso, Selens blanco para ojos, CX100 solo de rescate.</li><li>Óptica recomendada: una focal para todo el plano (Tokina 16-28 o Loxia 35).</li></ul>"
+      }
+    ]
   },
 /*
   "capilla-mayor": {
@@ -83,7 +99,23 @@ const SALAS = {
     bounds: [[-222, 682], [-306, 764]],
     funcion: "Espacio de reunión comunitaria, lectura de la regla, gobierno interno y corrección de faltas.",
     objetos: ["bancos corridos", "sitial de la abadesa", "mesa pequeña", "libro de regla", "libro de actas", "campanilla", "crucifijo mural", "urna de votación", "llaves"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 1 · 09:20-10:50 · Muerte · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Velatorio con imposición de manos de toda la comunidad.</li><li>Personajes: COM, ENFA, ABAD.</li><li>Bloque flexible de mañana para absorber pequeños retrasos.</li></ul>"
+      },
+      {
+        titulo: "Cobertura",
+        contenido: "<ul><li>Planos clave: PPP de la difunta con corona, PM de imposición y PG de velatorio.</li><li>Cámara lock x2 en planos de comunidad con cambio de vestuario.</li><li>Paneo al artesonado solo en pasada final si lo anterior es correcto.</li></ul>"
+      },
+      {
+        titulo: "Luz y arte",
+        contenido: "<ul><li>Luz base prestada del claustro con ventanas abiertas.</li><li>Prioridad al negativo para esculpir caras; fill muy tenue solo si falta nivel.</li><li>Patrimonio intocable: retablo, cuadros y crucifijo.</li></ul>"
+      }
+    ]
   },
 
   "sala-de-los-frailes": {
@@ -97,7 +129,23 @@ const SALAS = {
     bounds: [[-224, 786], [-304, 897]],
     funcion: "Estancia vinculada a la presencia masculina autorizada, asistencia religiosa o usos conventuales externos.",
     objetos: ["banco de espera", "mesa sobria", "sillas", "crucifijo", "aguamanil", "jarra", "cuenco", "libros devotos", "capa o manteo colgado"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 2 · 08:45-10:30 · Umbral · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: La abadesa escribe con la vicaria.</li><li>Acción: apertura de cajón, inicio de escritura, intento de cotilleo y reprimenda.</li><li>La escena depende de primera luz de mañana.</li></ul>"
+      },
+      {
+        titulo: "Luz y cámara",
+        contenido: "<ul><li>Ventana este como key natural; negativo a cámara para separar a la vicaria.</li><li>Ópticas recomendadas: Loxia 35/50 para rostro de abadesa, 24-105 para cobertura rápida.</li><li>Mantener vitrinas fuera de cuadro y apagadas.</li></ul>"
+      },
+      {
+        titulo: "Atrezo crítico",
+        contenido: "<ul><li>Papel de carta pendiente de cierre; preparar hojas de práctica y raccord.</li><li>Pluma y tintero confirmados; rosario de VIC en plano.</li><li>Confirmar cajón practicable de la mesa en técnica.</li></ul>"
+      }
+    ]
   },
 
   "almacen-de-paso": {
@@ -162,7 +210,19 @@ const SALAS = {
     bounds: [[-354, 634], [-516, 867]],
     funcion: "Centro de circulación interior, recogimiento y ordenamiento cotidiano de la comunidad.",
     objetos: ["fuente", "cubo de agua", "cántaros", "macetas", "escoba", "farol", "rosario", "banco de piedra", "ramas podadas", "llaves"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 2 · 12:30-13:30 · Estampas · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Limpieza del cristal de la reliquia.</li><li>Personajes: NOV-L y dos monjas opcionales para el susto.</li><li>Trabajo de pasillo: priorizar recorrido limpio y ritmo de acción.</li></ul>"
+      },
+      {
+        titulo: "Notas de escena",
+        contenido: "<ul><li>Debe leerse como tramo de tránsito de claustro, no como escena de sala cerrada.</li><li>Planificar la coreografía con espacio para paso y contrapaso.</li><li>Evitar elementos modernos en ejes largos del corredor.</li></ul>"
+      }
+    ]
   },
 
   "claustro-del-nogal": {
@@ -232,7 +292,23 @@ const SALAS = {
     bounds: [[-569, 696], [-634, 863]],
     funcion: "Comedor comunitario donde la comida se ordena como ritual de silencio, lectura y jerarquía.",
     objetos: ["mesas largas", "bancos", "escudillas", "cuencos", "jarras", "pan", "cuchillos romos", "servilletas de lino", "salero", "atril de lectura", "campanilla", "armario de vajilla"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 1 · 18:00-21:15 · Vida · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Comida en el refectorio con las 10 actrices.</li><li>Bloque clave de atardecer hasta ocaso.</li><li>No existe plano general real de mesa en U: se construye en montaje por setups.</li></ul>"
+      },
+      {
+        titulo: "Estrategia de cobertura",
+        contenido: "<ul><li>Mesa pequeña móvil: anclar raccord a la luz, no a la geografía.</li><li>Rodar por ejes y bloques: entrada/armarios, mesa, pan, sopa, bastón y miradas.</li><li>Cámara lock x2 en plano de entrada y paneo final solo si la pasada es buena.</li></ul>"
+      },
+      {
+        titulo: "Luz y arte",
+        contenido: "<ul><li>Fuente principal: haz rasante de tarde por ventanas oeste.</li><li>Negativo pesado obligatorio para controlar rebote de nave clara.</li><li>Atrezo crítico: menaje completo, pan, puchero, bastón de ABAD y mantel por cerrar.</li></ul>"
+      }
+    ]
   },
 
   "cilla": {
@@ -266,7 +342,19 @@ const SALAS = {
     polygon: [[-852, 666], [-654, 668], [-652, 866], [-790, 860], [-792, 832], [-888, 802]],
     funcion: "Patio asociado al cuidado, la convalecencia y el uso de plantas o remedios.",
     objetos: ["hierbas medicinales", "macetas", "mortero", "cesto", "paños", "jarra de agua", "banco", "tijeras", "vendas", "cuenco", "ramilletes secos"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloques de rodaje",
+        meta: "Día 2 · 10:30-12:30",
+        abierta: true,
+        contenido: "<ul><li>Lavatorio de manos (P1): 9 monjas, NOV-B sirve agua y se lava la última.</li><li>Recogida del higo (P3, si hay tiempo): escena breve de recurso con 2 monjas.</li><li>Planificar continuidad de humedad en manos y utensilios.</li></ul>"
+      },
+      {
+        titulo: "Puesta en escena",
+        contenido: "<ul><li>Mantener lectura coral del ritual y jerarquía de turnos.</li><li>Reservar ventana final para plano de NOV-B cerrando el gesto.</li><li>Cuidar fondos para evitar elementos contemporáneos de jardín.</li></ul>"
+      }
+    ]
   },
 
   "cocina": {
@@ -319,7 +407,23 @@ const SALAS = {
     polygon: [[-863, 540], [-868, 572], [-1053, 531], [-1045, 497]],
     funcion: "Espacio de comunicación vigilada a través de rejas, destinado a visitas, mensajes y asuntos externos.",
     objetos: ["rejas dobles", "sillas", "bancos", "crucifijo", "mesa estrecha", "cortina", "campanilla", "torno pequeño", "carta", "rosario", "pañuelo", "cesta"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 1 · 15:15-17:30 · Umbral · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Llegada de la postulante.</li><li>Personajes: POST, ABAD y TORN por confirmar.</li><li>Riesgo mayor de anacronismo por exterior visible a través de reja.</li></ul>"
+      },
+      {
+        titulo: "Cobertura y óptica",
+        contenido: "<ul><li>Planos a través de reja con 70-200 para compresión.</li><li>Primeros retratos del giro con 85 mm recomendado por espacio y foco.</li><li>Alternativa: barrotes como sombra proyectada sin reja delante de lente.</li></ul>"
+      },
+      {
+        titulo: "Luz y atrezo",
+        contenido: "<ul><li>CX100 como fuente dura para fabricar patrón de barrotes.</li><li>Clave de atrezo: llave de reja y maleta/baúl de la postulante pendientes de cierre.</li><li>Quemar exterior o excluirlo para evitar coches y aparcamiento.</li></ul>"
+      }
+    ]
   },
 
   "zaguan": {
@@ -339,7 +443,23 @@ const SALAS = {
     polygon: [[-922, 764], [-941, 830], [-1006, 814], [-990, 748]],
     funcion: "Sala polivalente para reunión, recepción o uso doméstico según las necesidades del convento.",
     objetos: ["mesa", "sillas", "bancos", "arca", "candil", "caja de documentos", "paños", "cesto", "atril pequeño", "jarra de agua"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 1 · 11:05-12:15 · Umbral · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Enfermería e inspección de postulante.</li><li>Personajes: ENF, ENFA, POST y MAEST.</li><li>Escena íntima y física con contraste de trato entre enferma y joven.</li></ul>"
+      },
+      {
+        titulo: "Luz propuesta",
+        contenido: "<ul><li>Intención actual: escena más iluminada, con ambiente de hospital.</li><li>Dominante cenital suave con Neewer RGB1200 rebotado en techo blanco (a confirmar en técnica).</li><li>Modelado táctil solo en insertos con fuente lateral baja y negativo cercano.</li></ul>"
+      },
+      {
+        titulo: "Cobertura y pendientes",
+        contenido: "<ul><li>Planos de destape y contacto preferiblemente en directo con dos cámaras para no repetir exposición.</li><li>Insertos de puro atrezo (barreño/trapo y trompetilla) pueden ir al final como bodegón.</li><li>Pendiente: condiciones de desnudo/destape y localización de barreño final.</li></ul>"
+      }
+    ]
   },
 
   "establo": {
@@ -353,7 +473,19 @@ const SALAS = {
     polygon: [[-971, 627], [-1018, 810], [-1061, 801], [-1014, 617]],
     funcion: "Dependencia de servicio para animales, aperos y trabajos ligados al abastecimiento.",
     objetos: ["pesebre", "paja", "heno", "cubo", "cuerda", "arneses", "silla de montar", "escoba", "horca", "azada", "sacos", "farol"],
-    descripcion: ""
+    descripcion: "",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 2 · 14:15-15:30 · Estampas · P2",
+        abierta: true,
+        contenido: "<ul><li>Escena: Cuidado del Niño Jesús.</li><li>Personaje principal: ENF; participación de ANG pendiente de decisión de puesta en escena.</li><li>Escena de transición antes del bloque final de planta alta.</li></ul>"
+      },
+      {
+        titulo: "Notas de dirección",
+        contenido: "<ul><li>Hay tres opciones de puesta en escena por cerrar.</li><li>Reservar tiempo de bloqueo para decidir eje de mirada y proximidad al objeto.</li><li>Cuidar textura orgánica del espacio (paja, madera, polvo) en primer término.</li></ul>"
+      }
+    ]
   },
 
   // ── Salas sin ubicar en el plano (sin bounds/polygon) ──────────────────────
@@ -378,7 +510,19 @@ const SALAS = {
     nombre: "Corredor de las celdas",
     foto: "img/salas/San_Antonio_el_Real_-_Corredor_de_las_Celdas_01.webp",
     funcion: "Corredor que lleva a las celdas antiguas de las hermanas.",
-    descripcion: "Pasillo que conecta las diferentes celdas del convento, utilizado por las monjas para acceder a sus habitaciones. Tiene una única ventana alta al fondo del corredor."
+      descripcion: "Pasillo que conecta las diferentes celdas del convento, utilizado por las monjas para acceder a sus habitaciones. Tiene una única ventana alta al fondo del corredor.",
+      rodajeSecciones: [
+        {
+          titulo: "Bloque de rodaje",
+          meta: "Día 2 · 15:30-16:45 · Muerte · P1",
+          abierta: true,
+          contenido: "<ul><li>Escena: Irse a dormir.</li><li>Personajes: ABAD, ENFA y comunidad.</li><li>Localización en planta alta (no representada en plano de planta baja).</li></ul>"
+        },
+        {
+          titulo: "Continuidad",
+          contenido: "<ul><li>Este bloque conecta directamente con Monja enferma en celda (16:45-17:35).</li><li>Mantener raccord de desplazamiento, cansancio y tono final de jornada.</li><li>Asegurar limpieza de fondos al tratarse de pasillo largo con perspectiva.</li></ul>"
+        }
+      ]
   },
 
     "ermita-de-santiago": {

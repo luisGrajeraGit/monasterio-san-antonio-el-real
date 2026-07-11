@@ -18,6 +18,38 @@
     '<circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>' +
     '</svg>';
 
+  function escapeHtml(valor) {
+    return String(valor)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function textoAParrafos(texto) {
+    return String(texto)
+      .split(/\n+/)
+      .map(function (linea) {
+        var limpia = linea.trim();
+        return limpia ? '<p>' + limpia + '</p>' : '';
+      })
+      .join('');
+  }
+
+  function renderizarAtrezzo(arr) {
+    if (!Array.isArray(arr) || !arr.length) {
+      return '<p class="sala-seccion-texto vacio">Sin información</p>';
+    }
+    return (
+      '<div class="sala-seccion-texto sala-objetos">' +
+      arr.map(function (o) {
+        return '<span class="objeto-tag">' + escapeHtml(o) + '</span>';
+      }).join('') +
+      '</div>'
+    );
+  }
+
   function mostrarError(mensaje) {
     document.title = 'Sala no encontrada — Monasterio de San Antonio el Real';
     document.getElementById('sala-foto').style.display = 'none';
@@ -136,37 +168,55 @@
       });
     }
 
-    // Secciones de contenido
-    var campos = [
-      { clave: 'funcion',     label: 'Función histórica' },
-      { clave: 'objetos',     label: 'Atrezzo'           },
-      { clave: 'descripcion', label: 'Notas'             }
-    ];
+    // Secciones de contenido (acordeones)
+    var secciones = [];
 
-    var html = campos.map(function (c) {
-      var valor = sala[c.clave];
-      var clase, contenido;
-      if (Array.isArray(valor) && valor.length) {
-        clase     = 'sala-seccion-texto sala-objetos';
-        contenido = valor.map(function (o) {
-          return '<span class="objeto-tag">' + o + '</span>';
-        }).join('');
-      } else if (valor) {
-        clase     = 'sala-seccion-texto';
-        contenido = valor;
-      } else {
-        clase     = 'sala-seccion-texto vacio';
-        contenido = 'Sin información';
-      }
+    if (Array.isArray(sala.rodajeSecciones) && sala.rodajeSecciones.length) {
+      sala.rodajeSecciones.forEach(function (sec) {
+        secciones.push({
+          titulo: sec.titulo || 'Plan de rodaje',
+          meta: sec.meta || '',
+          contenido: sec.contenido || '<p class="sala-seccion-texto vacio">Sin información</p>',
+          abierta: !!sec.abierta
+        });
+      });
+    }
+
+    secciones.push({
+      titulo: 'Función histórica',
+      contenido: sala.funcion
+        ? '<div class="sala-seccion-texto">' + textoAParrafos(escapeHtml(sala.funcion)) + '</div>'
+        : '<p class="sala-seccion-texto vacio">Sin información</p>'
+    });
+
+    secciones.push({
+      titulo: 'Atrezzo base',
+      contenido: renderizarAtrezzo(sala.objetos)
+    });
+
+    secciones.push({
+      titulo: 'Notas de localización',
+      contenido: sala.descripcion
+        ? '<div class="sala-seccion-texto">' + sala.descripcion + '</div>'
+        : '<p class="sala-seccion-texto vacio">Sin información</p>'
+    });
+
+    var html = secciones.map(function (sec, idx) {
+      var abierta = sec.abierta || (idx === 0 && !secciones.some(function (s) { return s.abierta; }));
       return (
-        '<div class="sala-seccion">' +
-          '<div class="sala-seccion-label">' + c.label + '</div>' +
-          '<div class="' + clase + '">' + contenido + '</div>' +
-        '</div>'
+        '<details class="sala-acordeon"' + (abierta ? ' open' : '') + '>' +
+          '<summary>' +
+            '<span class="sala-acordeon-titulo">' + escapeHtml(sec.titulo) + '</span>' +
+            (sec.meta ? '<span class="sala-acordeon-meta">' + escapeHtml(sec.meta) + '</span>' : '') +
+            '<span class="sala-acordeon-icono" aria-hidden="true"></span>' +
+          '</summary>' +
+          '<div class="sala-acordeon-cuerpo">' + sec.contenido + '</div>' +
+        '</details>'
       );
     }).join('');
 
-    document.getElementById('sala-secciones').innerHTML = html;
+    document.getElementById('sala-secciones').innerHTML =
+      '<div class="sala-acordeones">' + html + '</div>';
 
     // Índice (ej. "3 / 29")
     var ids   = Object.keys(SALAS);
