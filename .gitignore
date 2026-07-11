@@ -12,3 +12,6 @@ Thumbs.db
 *.bak
 
 img.zip
+
+# Comprimidos
+*.zip
