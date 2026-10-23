@@ -9,9 +9,22 @@
   document.documentElement.style.height   = '100%';
   document.documentElement.style.overflow = 'hidden';
 
-  // ── Dimensiones reales de la imagen del plano ──────────────────────────────
-  const IMG_W = 1462;
-  const IMG_H = 1076;
+  // ── Dimensiones del sistema de coordenadas de los planos ───────────────────
+  // Las dos plantas están alineadas entre sí y comparten coordenadas, así que
+  // al cambiar de planta se conserva el encuadre. Las imágenes tienen el doble
+  // de resolución para que el plano se vea nítido al hacer zoom.
+  const IMG_W = 1963;
+  const IMG_H = 1402;
+
+  const PLANTAS = {
+    baja: { nombre: 'Planta baja', imagen: 'img/San_Antonio_el_Real_-_Plano_Planta_Baja.png' },
+    alta: { nombre: 'Planta alta', imagen: 'img/San_Antonio_el_Real_-_Plano_Planta_Alta.png' }
+  };
+
+  // Estilos de las zonas (un único color para todas las salas)
+  const ESTILO_SALA        = { color: '#7d2020', weight: 1, opacity: 0.9, fillColor: '#973d35', fillOpacity: 0.82 };
+  const ESTILO_SALA_ACTIVA = { color: '#ffffff', weight: 2, opacity: 1,   fillColor: '#b8473c', fillOpacity: 0.9 };
+  const ESTILO_SIN_FICHA   = { color: '#973d35', weight: 1.5, opacity: 0.9, dashArray: '5 4', fillColor: '#973d35', fillOpacity: 0.08 };
 
   // ── Inicializar mapa Leaflet con CRS simple (sin proyección geográfica) ────
   const map = L.map('map', {
@@ -24,15 +37,16 @@
     zoomControl: true
   });
 
-  // Imagen del plano como capa base
   // Bounds: [[sur, oeste], [norte, este]] → aquí mapeamos píxeles de imagen:
   //   lat = -y_píxel  (y=0 arriba en imagen → lat=0 en Leaflet)
   //   lng =  x_píxel
   const imageBounds = [[-IMG_H, 0], [0, IMG_W]];
-  L.imageOverlay(
-    'img/San_Antonio_el_Real_-_Mapa_Plan_Rodaje_2dias.png',
-    imageBounds
-  ).addTo(map);
+
+  // Una capa por planta con su imagen, sus zonas y sus etiquetas
+  var capas = {};
+  Object.keys(PLANTAS).forEach(function (id) {
+    capas[id] = L.layerGroup([L.imageOverlay(PLANTAS[id].imagen, imageBounds)]);
+  });
 
   map.fitBounds(imageBounds);
 
@@ -44,27 +58,109 @@
 
   // ── Estado ─────────────────────────────────────────────────────────────────
   let salaActiva = null;
+  let plantaActiva = null;
 
   // Detectar dispositivo táctil para adaptar la interacción
   var esMovil = window.matchMedia('(pointer: coarse)').matches;
 
+  // ── Etiquetas con el nombre de cada zona ───────────────────────────────────
+  // Se colocan en el centroide y se giran según el lado más largo de la zona,
+  // de modo que las salas estrechas u oblicuas llevan el texto a lo largo.
+  function geometriaEtiqueta(anillo) {
+    var area = 0, cx = 0, cy = 0, n = anillo.length;
+    var ladoMax = 0, angulo = 0;
+    for (var i = 0; i < n; i++) {
+      var p = anillo[i], q = anillo[(i + 1) % n];
+      var x0 = p[1], y0 = -p[0], x1 = q[1], y1 = -q[0];
+      var f = x0 * y1 - x1 * y0;
+      area += f; cx += (x0 + x1) * f; cy += (y0 + y1) * f;
+      var lado = Math.hypot(x1 - x0, y1 - y0);
+      if (lado > ladoMax) { ladoMax = lado; angulo = Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI; }
+    }
+    area /= 2;
+    if (angulo >= 90) angulo -= 180;
+    if (angulo < -90) angulo += 180;
+
+    // Extensión de la zona medida perpendicularmente al lado más largo
+    var rad = angulo * Math.PI / 180, perpMin = Infinity, perpMax = -Infinity;
+    anillo.forEach(function (p) {
+      var d = -p[1] * Math.sin(rad) + (-p[0]) * Math.cos(rad);
+      perpMin = Math.min(perpMin, d); perpMax = Math.max(perpMax, d);
+    });
+    var ancho = ladoMax, grosor = perpMax - perpMin;
+
+    // Zonas verticales con sitio suficiente: texto horizontal
+    if (Math.abs(angulo) > 45 && grosor >= 70) { angulo = 0; ancho = grosor; }
+
+    return { centro: [-cy / (6 * area), cx / (6 * area)], angulo: angulo, ancho: ancho * 0.9 };
+  }
+
+  function crearEtiqueta(nombre, anillo, clase) {
+    var g = geometriaEtiqueta(anillo);
+    var span = document.createElement('span');
+    span.textContent = nombre;
+    // Zonas muy pequeñas (p. ej. el pozo): texto horizontal y ancho mínimo
+    // para que no se parta el nombre
+    if (g.ancho < 60) { g.angulo = 0; g.ancho = 60; }
+    span.style.setProperty('--w', g.ancho.toFixed(0));
+    span.style.transform = 'translate(-50%, -50%) rotate(' + g.angulo.toFixed(1) + 'deg)';
+    return L.marker(g.centro, {
+      interactive: false,
+      keyboard:    false,
+      icon: L.divIcon({ className: 'zona-etiqueta ' + clase, html: span.outerHTML, iconSize: [0, 0] })
+    });
+  }
+
+  // Anillo exterior de una zona (bounds → 4 esquinas; polygon con huecos → el primero)
+  function anilloExterior(zona) {
+    if (zona.bounds) {
+      var b = zona.bounds;
+      return [b[0], [b[0][0], b[1][1]], b[1], [b[1][0], b[0][1]]];
+    }
+    return Array.isArray(zona.polygon[0][0]) ? zona.polygon[0] : zona.polygon;
+  }
+
+  // El tamaño del texto acompaña al zoom (1 unidad del plano = 2^zoom px)
+  var mapEl = document.getElementById('map');
+  function actualizarEscala(zoom) {
+    var escala = Math.pow(2, zoom);
+    mapEl.style.setProperty('--escala', escala);
+    mapEl.classList.toggle('etiquetas-ocultas', escala < 0.42);
+  }
+  map.on('zoomanim', function (e) { actualizarEscala(e.zoom); });
+  map.on('zoomend',  function ()  { actualizarEscala(map.getZoom()); });
+  actualizarEscala(map.getZoom());
+
+  // Plantas en las que aparece una sala: `planta` admite un valor o una lista
+  // (los patios y espacios a doble altura se dibujan en las dos)
+  function plantasDe(sala) {
+    return [].concat(sala.planta || 'baja');
+  }
+
+  // Resaltar o restaurar todas las zonas de una sala (una por planta)
+  function estiloSala(id, estilo) {
+    if (id && SALAS[id] && SALAS[id]._rects) {
+      SALAS[id]._rects.forEach(function (r) { r.setStyle(estilo); });
+    }
+  }
+
   // ── Crear zona interactiva para cada sala ──────────────────────────────────
   Object.values(SALAS).forEach(function (sala) {
     if (!sala.bounds && !sala.polygon) return;
+    sala._rects = [];
+    plantasDe(sala).forEach(function (planta) {
+      crearZonaSala(sala, capas[planta] || capas.baja);
+    });
+  });
 
-    var shapeOpts = {
-      color:       '#2E7D32',
-      weight:      2,
-      fillColor:   '#2E7D32',
-      fillOpacity: 0,
-      opacity:     0,
-      interactive: true
-    };
+  function crearZonaSala(sala, capa) {
+    var shapeOpts = L.extend({ interactive: true }, ESTILO_SALA);
     var rect = sala.polygon
       ? L.polygon(sala.polygon, shapeOpts)
       : L.rectangle(sala.bounds, shapeOpts);
 
-    rect.addTo(map);
+    rect.addTo(capa);
+    crearEtiqueta(sala.nombre, anilloExterior(sala), '').addTo(capa);
 
     // Tooltip y hover sólo en escritorio (no hay hover en táctil)
     if (!esMovil) {
@@ -76,7 +172,7 @@
       });
 
       rect.on('mouseover', function () {
-        abrirPanel(sala, this);
+        abrirPanel(sala);
       });
     }
 
@@ -84,27 +180,84 @@
     rect.on('click', function (e) {
       L.DomEvent.stopPropagation(e);
       if (esMovil) {
-        abrirPanel(sala, this);
+        abrirPanel(sala);
       } else {
         window.location.href = 'sala.html?sala=' + sala.id;
       }
     });
 
     // Guardar referencia para poder manipularla desde el panel
-    sala._rect = rect;
+    sala._rects.push(rect);
+  }
+
+  // ── Zonas del índice de los planos que aún no tienen ficha ─────────────────
+  // Borde discontinuo, sin enlace; el tooltip indica su número en la leyenda.
+  if (typeof ZONAS_SIN_FICHA !== 'undefined') {
+    ZONAS_SIN_FICHA.forEach(function (zona) {
+      var capa = capas[zona.planta] || capas.baja;
+      var forma = L.polygon(zona.polygon, L.extend({ interactive: true }, ESTILO_SIN_FICHA));
+      forma.bindTooltip(zona.nombre + ' · sin ficha (nº ' + zona.indice + ' del índice)', {
+        className: 'sala-tooltip',
+        direction: 'top',
+        sticky:    true,
+        offset:    [0, -6]
+      });
+      forma.on('click', function (e) { L.DomEvent.stopPropagation(e); });
+      forma.addTo(capa);
+      crearEtiqueta(zona.nombre, anilloExterior(zona), 'sin-ficha').addTo(capa);
+    });
+  }
+
+  // ── Cambio de planta ───────────────────────────────────────────────────────
+  // La planta elegida se refleja en la URL (index.html#alta) para poder
+  // enlazarla directamente, p. ej. desde la ficha de una sala de planta alta.
+  var botonesPlanta = {};
+
+  function mostrarPlanta(id) {
+    if (!capas[id] || id === plantaActiva) return;
+    if (salaActiva && plantasDe(SALAS[salaActiva]).indexOf(id) === -1) cerrarPanel();
+    if (plantaActiva) map.removeLayer(capas[plantaActiva]);
+    capas[id].addTo(map);
+    plantaActiva = id;
+    Object.keys(botonesPlanta).forEach(function (k) {
+      botonesPlanta[k].classList.toggle('activa', k === id);
+      botonesPlanta[k].setAttribute('aria-pressed', k === id ? 'true' : 'false');
+    });
+    history.replaceState(null, '', id === 'baja' ? location.pathname + location.search : '#' + id);
+  }
+
+  var ControlPlantas = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function () {
+      var cont = L.DomUtil.create('div', 'control-plantas');
+      // De arriba abajo: planta alta sobre planta baja
+      ['alta', 'baja'].forEach(function (id) {
+        var btn = L.DomUtil.create('button', '', cont);
+        btn.type = 'button';
+        btn.textContent = PLANTAS[id].nombre;
+        btn.addEventListener('click', function () { mostrarPlanta(id); });
+        botonesPlanta[id] = btn;
+      });
+      L.DomEvent.disableClickPropagation(cont);
+      return cont;
+    }
+  });
+  map.addControl(new ControlPlantas());
+
+  mostrarPlanta(location.hash === '#alta' ? 'alta' : 'baja');
+  window.addEventListener('hashchange', function () {
+    mostrarPlanta(location.hash === '#alta' ? 'alta' : 'baja');
   });
 
   // ── Panel lateral ──────────────────────────────────────────────────────────
   var panelWrapper = document.getElementById('panel-wrapper');
 
-  function abrirPanel(sala, rect) {
+  function abrirPanel(sala) {
     // Desactivar sala anterior
-    if (salaActiva && SALAS[salaActiva] && SALAS[salaActiva]._rect) {
-      SALAS[salaActiva]._rect.setStyle({ opacity: 0, fillOpacity: 0 });
-    }
+    estiloSala(salaActiva, ESTILO_SALA);
 
     salaActiva = sala.id;
-    rect.setStyle({ opacity: 1, fillOpacity: 0.22 });
+    estiloSala(salaActiva, ESTILO_SALA_ACTIVA);
 
     // Nombre
     document.getElementById('panel-nombre').textContent = sala.nombre;
@@ -152,9 +305,7 @@
   }
 
   function cerrarPanel() {
-    if (salaActiva && SALAS[salaActiva] && SALAS[salaActiva]._rect) {
-      SALAS[salaActiva]._rect.setStyle({ opacity: 0, fillOpacity: 0 });
-    }
+    estiloSala(salaActiva, ESTILO_SALA);
     salaActiva = null;
     panelWrapper.classList.add('oculto');
     setTimeout(function () { map.invalidateSize(); }, 340);

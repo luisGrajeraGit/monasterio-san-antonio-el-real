@@ -24,6 +24,10 @@
 //
 //  descripcion   → notas ampliadas. Acepta HTML básico (<em>, <br>, etc.).
 //
+//  planta        → "baja" o "alta": plano en el que se dibuja la sala.
+//                  Para patios y espacios a doble altura, las dos:
+//                    planta: ["baja", "alta"]
+//
 //  bounds        → zona del plano para salas RECTANGULARES (alineadas con los ejes).
 //                  Pulsa la tecla D en el mapa para activar el modo de coordenadas:
 //                  mueve el cursor para ver la posición y haz clic para copiarla.
@@ -47,7 +51,8 @@ const SALAS = {
     id: "panteon",
     nombre: "Panteón",
     foto: "img/salas/San_Antonio_el_Real_-_Panteon_01.webp",
-    bounds: [[-58, 698], [-166, 766]],
+    planta: "baja",
+    bounds: [[-58, 915], [-200, 1007]],
     funcion: "Espacio funerario y memorial, vinculado a la conservación de restos, linajes y memoria religiosa. Tiene unas mesas de resrtauración. Suelo en bruto, sin rematar",
     objetos: ["lápidas", "paños negros", "velas", "candelabros bajos", "crucifijo", "relicario", "libro de difuntas", "flores secas"],
     descripcion: "",
@@ -83,7 +88,8 @@ const SALAS = {
     id: "sacristia",
     nombre: "Sacristía",
     foto: "img/salas/San_Antonio_el_Real_-_Sacristia_01.webp",
-    bounds: [[-220, 585], [-287, 673]],
+    planta: "baja",
+    bounds: [[-272, 762], [-360, 881]],
     funcion: "Sala de preparación y custodia de ornamentos, vasos sagrados y objetos litúrgicos.",
     objetos: ["casullas", "albas", "amitos", "cíngulos", "estolas", "corporales", "purificadores", "cáliz", "patena", "copón", "vinajeras", "lavabo", "armario de ornamentos", "arca con llave"],
     descripcion: ""
@@ -96,7 +102,8 @@ const SALAS = {
     fotos: [
       "img/salas/San_Antonio_el_Real_-_Sala_Capitular_02.webp",
     ],
-    bounds: [[-222, 682], [-306, 764]],
+    planta: "baja",
+    bounds: [[-275, 893], [-385, 1005]],
     funcion: "Espacio de reunión comunitaria, lectura de la regla, gobierno interno y corrección de faltas.",
     objetos: ["bancos corridos", "sitial de la abadesa", "mesa pequeña", "libro de regla", "libro de actas", "campanilla", "crucifijo mural", "urna de votación", "llaves"],
     descripcion: "",
@@ -126,7 +133,8 @@ const SALAS = {
       "img/salas/San_Antonio_el_Real_-_Sala_de_los_Frailes_02.webp",
       "img/salas/San_Antonio_el_Real_-_Sala_de_los_Frailes_03.webp"
     ],
-    bounds: [[-224, 786], [-304, 897]],
+    planta: "baja",
+    bounds: [[-277, 1035], [-382, 1185]],
     funcion: "Estancia vinculada a la presencia masculina autorizada, asistencia religiosa o usos conventuales externos.",
     objetos: ["banco de espera", "mesa sobria", "sillas", "crucifijo", "aguamanil", "jarra", "cuenco", "libros devotos", "capa o manteo colgado"],
     descripcion: "",
@@ -152,7 +160,8 @@ const SALAS = {
     id: "almacen-de-paso",
     nombre: "Almacén de Paso",
     foto: "img/salas/San_Antonio_el_Real_-_Almacen_de_Paso_01.webp",
-    bounds: [[-222, 973], [-308, 913]],
+    planta: "baja",
+    bounds: [[-274, 1289], [-387, 1207]],
     funcion: "Zona auxiliar de tránsito y depósito temporal de objetos, materiales o provisiones.",
     objetos: ["cestas", "sacos", "cuerdas", "candiles", "escobas", "cubos", "tablas", "herramientas pequeñas", "paños doblados", "cajas de madera"],
     descripcion: ""
@@ -182,7 +191,8 @@ const SALAS = {
     id: "patio-de-la-vicaria",
     nombre: "Patio de la Vicaría",
     foto: "img/salas/San_Antonio_el_Real_-_Patio_de_la_Vicaria_01.webp",
-    polygon: [[-236, 214], [-246, 406], [-370, 402], [-356, 206]],
+    planta: "baja",
+    polygon: [[-295, 258], [-307, 518], [-471, 513], [-453, 247]],
     funcion: "Patio asociado a dependencias de gestión, tránsito y relación con ámbitos administrativos o eclesiásticos.",
     objetos: ["banco de piedra", "cántaro", "farol", "macetas", "escoba de palma", "cubo", "llavero", "papeles doblados", "sello", "cordón de clausura"],
     descripcion: ""
@@ -192,7 +202,8 @@ const SALAS = {
     id: "iglesia",
     nombre: "Iglesia",
     foto: "img/salas/San_Antonio_el_Real_-_Iglesia_01.webp",
-    bounds: [[-317, 500], [-553, 570]],
+    planta: ["baja", "alta"],
+    bounds: [[-401, 646], [-712, 741]],
     funcion: "Nave de culto, oración comunitaria y separación ritual entre clausura y mundo exterior.",
     objetos: ["bancos", "reclinatorios", "velas", "candeleros", "retablos", "atril", "misal", "lámpara votiva", "confesonario", "agua bendita", "campanilla", "flores"],
     descripcion: ""
@@ -207,7 +218,8 @@ const SALAS = {
       "img/salas/San_Antonio_el_Real_-_Claustro_Central_03.webp",
       "img/salas/San_Antonio_el_Real_-_Claustro_Central_04.webp"
     ],
-    bounds: [[-354, 634], [-516, 867]],
+    planta: ["baja", "alta"],
+    bounds: [[-449, 828], [-662, 1145]],
     funcion: "Centro de circulación interior, recogimiento y ordenamiento cotidiano de la comunidad.",
     objetos: ["fuente", "cubo de agua", "cántaros", "macetas", "escoba", "farol", "rosario", "banco de piedra", "ramas podadas", "llaves"],
     descripcion: "",
@@ -232,7 +244,8 @@ const SALAS = {
     fotos: [
       "img/salas/San_Antonio_el_Real_-_Claustro_del_Nogal_02.webp"
     ],
-    bounds: [[-252, 1011], [-525, 1276]],
+    planta: ["baja", "alta"],
+    bounds: [[-313, 1340], [-672, 1700]],
     funcion: "Patio interior ajardinado, lugar de paso, trabajo ligero, espera y respiración dentro de la clausura.",
     objetos: ["nogal", "banco", "cántaro", "cubo", "azada pequeña", "tijeras de podar", "cesta de mimbre", "hojas secas", "hierbas", "farol"],
     descripcion: ""
@@ -275,7 +288,8 @@ const SALAS = {
     fotos: [
       "img/salas/San_Antonio_el_Real_-_Coro_Mayor_02.webp",
     ],
-    bounds: [[-566, 494], [-697, 579]],
+    planta: ["baja", "alta"],
+    bounds: [[-729, 638], [-902, 754]],
     funcion: "Lugar reservado para el rezo coral, los oficios cantados y la presencia comunitaria ante la liturgia.",
     objetos: ["sillería de coro", "facistol", "libros de coro", "antifonario", "salterio", "misal", "puntero", "vela", "campanilla", "órgano", "reclinatorios", "atril"],
     descripcion: ""
@@ -289,7 +303,8 @@ const SALAS = {
       "img/salas/San_Antonio_el_Real_-_Refectorio_02.webp",
       "img/salas/San_Antonio_el_Real_-_Refectorio_03.webp"
     ],
-    bounds: [[-569, 696], [-634, 863]],
+    planta: "baja",
+    bounds: [[-732, 912], [-818, 1139]],
     funcion: "Comedor comunitario donde la comida se ordena como ritual de silencio, lectura y jerarquía.",
     objetos: ["mesas largas", "bancos", "escudillas", "cuencos", "jarras", "pan", "cuchillos romos", "servilletas de lino", "salero", "atril de lectura", "campanilla", "armario de vajilla"],
     descripcion: "",
@@ -315,7 +330,8 @@ const SALAS = {
     id: "cilla",
     nombre: "Cilla",
     foto: "img/salas/San_Antonio_el_Real_-_Cilla_01.webp",
-    bounds: [[-568, 918], [-640, 1007]],
+    planta: "baja",
+    bounds: [[-730, 1214], [-825, 1335]],
     funcion: "Despensa o almacén de grano, alimentos y provisiones esenciales de la comunidad.",
     objetos: ["sacos de trigo", "sacos de cebada", "tinajas de aceite", "orzas", "quesos", "legumbres secas", "balanza", "pesas", "libro de cuentas", "llaves", "cucharón", "arca"],
     descripcion: ""
@@ -339,7 +355,8 @@ const SALAS = {
       "img/salas/San_Antonio_el_Real_-_Jardin_de_la_Enfermeria_02.webp",
       "img/salas/San_Antonio_el_Real_-_Jardin_de_la_Enfermeria_03.webp"
     ],
-    polygon: [[-852, 666], [-654, 668], [-652, 866], [-790, 860], [-792, 832], [-888, 802]],
+    planta: ["baja", "alta"],
+    polygon: [[-1106, 872], [-845, 874], [-841, 1143], [-1023, 1135], [-1026, 1097], [-1153, 1057]],
     funcion: "Patio asociado al cuidado, la convalecencia y el uso de plantas o remedios.",
     objetos: ["hierbas medicinales", "macetas", "mortero", "cesto", "paños", "jarra de agua", "banco", "tijeras", "vendas", "cuenco", "ramilletes secos"],
     descripcion: "",
@@ -361,7 +378,8 @@ const SALAS = {
     id: "cocina",
     nombre: "Cocina",
     foto: "img/salas/San_Antonio_el_Real_-_Cocina_01.webp",
-    bounds: [[-708, 872], [-799, 904]],
+    planta: "baja",
+    bounds: [[-915, 1152], [-1035, 1195]],
     funcion: "Lugar de preparación de alimentos, reparto de raciones y trabajo doméstico.",
     objetos: ["fogón", "ollas de barro", "calderos de cobre", "sartenes", "cucharones", "cuchillos", "mortero", "tabla de cortar", "leña", "cántaros", "tinajas", "paños", "delantales"],
     descripcion: ""
@@ -371,7 +389,8 @@ const SALAS = {
     id: "comedor",
     nombre: "Comedor",
     foto: "img/salas/San_Antonio_el_Real_-_Comedor_01.webp",
-    bounds: [[-692, 919], [-792, 959]],
+    planta: "baja",
+    bounds: [[-894, 1215], [-1026, 1270]],
     funcion: "Estancia auxiliar para comidas, servicio o usos domésticos ligados a la alimentación.",
     objetos: ["mesa auxiliar", "bancos", "jarras", "escudillas", "bandejas", "panera", "paños", "jarro de agua", "cesta", "armario bajo"],
     descripcion: ""
@@ -404,7 +423,8 @@ const SALAS = {
     fotos: [
       "img/salas/San_Antonio_el_Real_-_Locutorios_02.webp"
     ],
-    polygon: [[-863, 540], [-868, 572], [-1053, 531], [-1045, 497]],
+    planta: "baja",
+    polygon: [[-1121, 701], [-1127, 744], [-1371, 688], [-1361, 642]],
     funcion: "Espacio de comunicación vigilada a través de rejas, destinado a visitas, mensajes y asuntos externos.",
     objetos: ["rejas dobles", "sillas", "bancos", "crucifijo", "mesa estrecha", "cortina", "campanilla", "torno pequeño", "carta", "rosario", "pañuelo", "cesta"],
     descripcion: "",
@@ -428,9 +448,10 @@ const SALAS = {
 
   "zaguan": {
     id: "zaguan",
-    nombre: "Zagúan",
+    nombre: "Zaguán",
     foto: "img/salas/San_Antonio_el_Real_-_Zaguan_01.webp",
-    polygon: [[-893, 644], [-920, 756], [-988, 741], [-961, 629]],
+    planta: "baja",
+    polygon: [[-1160, 842], [-1195, 994], [-1285, 974], [-1250, 822]],
     funcion: "Vestíbulo de entrada, espera y distribución hacia otras dependencias.",
     objetos: ["banco", "farol", "perchero", "llaves", "escoba", "cubo", "alfombra de esparto", "puerta claveteada", "cesta", "paquetes"],
     descripcion: ""
@@ -440,7 +461,8 @@ const SALAS = {
     id: "sala-cuadrada",
     nombre: "Sala Cuadrada",
     foto: "img/salas/San_Antonio_el_Real_-_Sala_Cuadrada_01.webp",
-    polygon: [[-922, 764], [-941, 830], [-1006, 814], [-990, 748]],
+    planta: "baja",
+    polygon: [[-1198, 1005], [-1223, 1095], [-1308, 1073], [-1288, 983]],
     funcion: "Sala polivalente para reunión, recepción o uso doméstico según las necesidades del convento.",
     objetos: ["mesa", "sillas", "bancos", "arca", "candil", "caja de documentos", "paños", "cesto", "atril pequeño", "jarra de agua"],
     descripcion: "",
@@ -470,7 +492,8 @@ const SALAS = {
       "img/salas/San_Antonio_el_Real_-_Establo_02.webp",
       "img/salas/San_Antonio_el_Real_-_Establo_03.webp"
     ],
-    polygon: [[-971, 627], [-1018, 810], [-1061, 801], [-1014, 617]],
+    planta: "baja",
+    polygon: [[-1263, 819], [-1324, 1067], [-1381, 1055], [-1320, 805]],
     funcion: "Dependencia de servicio para animales, aperos y trabajos ligados al abastecimiento.",
     objetos: ["pesebre", "paja", "heno", "cubo", "cuerda", "arneses", "silla de montar", "escoba", "horca", "azada", "sacos", "farol"],
     descripcion: "",
@@ -486,6 +509,41 @@ const SALAS = {
         contenido: "<ul><li>Hay tres opciones de puesta en escena por cerrar.</li><li>Reservar tiempo de bloqueo para decidir eje de mirada y proximidad al objeto.</li><li>Cuidar textura orgánica del espacio (paja, madera, polvo) en primer término.</li></ul>"
       }
     ]
+  },
+
+  // ── Planta alta ────────────────────────────────────────────────────────────
+
+  "corredor-de-celdas": {
+    id: "corredor-de-celdas",
+    nombre: "Corredor de las celdas",
+    foto: "img/salas/San_Antonio_el_Real_-_Corredor_de_las_Celdas_01.webp",
+    planta: "alta",
+    bounds: [[-346, 765], [-312, 1290]],
+    funcion: "Corredor que lleva a las celdas antiguas de las hermanas.",
+    descripcion: "Pasillo que conecta las diferentes celdas del convento, utilizado por las monjas para acceder a sus habitaciones. Tiene una única ventana alta al fondo del corredor.",
+    rodajeSecciones: [
+      {
+        titulo: "Bloque de rodaje",
+        meta: "Día 2 · 15:30-16:45 · Muerte · P1",
+        abierta: true,
+        contenido: "<ul><li>Escena: Irse a dormir.</li><li>Personajes: ABAD, ENFA y comunidad.</li><li>Localización en planta alta.</li></ul>"
+      },
+      {
+        titulo: "Continuidad",
+        contenido: "<ul><li>Este bloque conecta directamente con Monja enferma en celda (16:45-17:35).</li><li>Mantener raccord de desplazamiento, cansancio y tono final de jornada.</li><li>Asegurar limpieza de fondos al tratarse de pasillo largo con perspectiva.</li></ul>"
+      }
+    ]
+  },
+
+  "salon-de-los-libros": {
+    id: "salon-de-los-libros",
+    nombre: "Salón de los Libros",
+    foto: "img/salas/San_Antonio_el_Real_-_Salon_de_los_Libros_01.webp",
+    planta: "alta",
+    polygon: [[-1138, 811], [-1186, 993], [-1277, 980], [-1247, 802]],
+    funcion: "Sala de estudio, copia y conservación de libros y manuscritos de la comunidad.",
+    objetos: ["estanterías", "libros encuadernados", "atril de lectura", "tintero", "plumas", "papel", "lupa", "vela", "escalera pequeña", "cajas de documentos"],
+    descripcion: ""
   },
 
   // ── Salas sin ubicar en el plano (sin bounds/polygon) ──────────────────────
@@ -505,26 +563,6 @@ const SALAS = {
     descripcion: ""
   },
 
-    "corredor-de-celdas": {
-    id: "corredor-de-celdas",
-    nombre: "Corredor de las celdas",
-    foto: "img/salas/San_Antonio_el_Real_-_Corredor_de_las_Celdas_01.webp",
-    funcion: "Corredor que lleva a las celdas antiguas de las hermanas.",
-      descripcion: "Pasillo que conecta las diferentes celdas del convento, utilizado por las monjas para acceder a sus habitaciones. Tiene una única ventana alta al fondo del corredor.",
-      rodajeSecciones: [
-        {
-          titulo: "Bloque de rodaje",
-          meta: "Día 2 · 15:30-16:45 · Muerte · P1",
-          abierta: true,
-          contenido: "<ul><li>Escena: Irse a dormir.</li><li>Personajes: ABAD, ENFA y comunidad.</li><li>Localización en planta alta (no representada en plano de planta baja).</li></ul>"
-        },
-        {
-          titulo: "Continuidad",
-          contenido: "<ul><li>Este bloque conecta directamente con Monja enferma en celda (16:45-17:35).</li><li>Mantener raccord de desplazamiento, cansancio y tono final de jornada.</li><li>Asegurar limpieza de fondos al tratarse de pasillo largo con perspectiva.</li></ul>"
-        }
-      ]
-  },
-
     "ermita-de-santiago": {
     id: "ermita-de-santiago",
     nombre: "Ermita de Santiago",
@@ -537,14 +575,6 @@ const SALAS = {
     descripcion: "Pequeña ermita con decoraciones muy coloridas y frescos en las paredes. Se encuentra junto al cementerio de las monjas y tiene un altar con una imagen de Santiago."
   },
 
-  "salon-de-los-libros": {
-    id: "salon-de-los-libros",
-    nombre: "Salón de los Libros",
-    foto: "img/salas/San_Antonio_el_Real_-_Salon_de_los_Libros_01.webp",
-    funcion: "Sala de estudio, copia y conservación de libros y manuscritos de la comunidad.",
-    objetos: ["estanterías", "libros encuadernados", "atril de lectura", "tintero", "plumas", "papel", "lupa", "vela", "escalera pequeña", "cajas de documentos"],
-    descripcion: ""
-  },
 /*
   "la-casa-del-principe": {
     id: "la-casa-del-principe",
@@ -557,3 +587,30 @@ const SALAS = {
   }
 */
 };
+
+// ── Zonas del índice de los planos sin ficha todavía ─────────────────────────
+// Estancias numeradas en la leyenda de los planos (img/0002 Planta baja.pdf,
+// img/0003 Planta alta.pdf) de las que aún no hay información. Se dibujan en
+// el mapa con borde discontinuo y sin enlace. Para darles ficha, mueve la
+// entrada a SALAS (con su planta y su polygon) y complétala.
+//
+//  indice  → número de la estancia en la leyenda del plano.
+//  polygon → mismo formato que en SALAS; admite huecos: [exterior, hueco].
+
+const ZONAS_SIN_FICHA = [
+  { id: "capilla-mayor", nombre: "Capilla Mayor", planta: "baja", indice: 7,
+    polygon: [[-216, 643], [-214, 744], [-384, 745], [-382, 645]] },
+  { id: "acceso-al-convento", nombre: "Acceso al Convento", planta: "baja", indice: 9,
+    polygon: [[-965, 686], [-1047, 665], [-1056, 703], [-973, 722]] },
+  { id: "lonja-de-la-iglesia", nombre: "Lonja de la Iglesia", planta: "baja", indice: 11,
+    polygon: [[-726, 421], [-900, 421], [-895, 618], [-725, 618]] },
+  { id: "noviciado", nombre: "Noviciado", planta: "baja", indice: 12,
+    polygon: [[-841, 1285], [-898, 1289], [-896, 1438], [-841, 1437]] },
+  { id: "lavaderos", nombre: "Lavaderos", planta: "baja", indice: 14,
+    polygon: [[-233, 1756], [-481, 1757], [-487, 1870], [-234, 1867]] },
+  { id: "pozo", nombre: "Pozo", planta: "baja", indice: 16,
+    polygon: [[-552, 1489], [-562, 1479], [-562, 1465], [-552, 1455], [-538, 1455], [-528, 1465], [-528, 1479], [-538, 1489]] },
+  { id: "claustro-de-la-vicaria", nombre: "Claustro de la Vicaría", planta: "alta", indice: 2,
+    polygon: [[[-268, 228], [-292, 540], [-490, 540], [-467, 225]],
+              [[-297, 255], [-318, 510], [-462, 510], [-440, 252]]] }
+];

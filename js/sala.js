@@ -87,6 +87,14 @@
     // Título visible
     document.getElementById('sala-titulo').textContent = sala.nombre;
 
+    // Los enlaces al plano abren la planta en la que está la sala
+    // (si está en las dos, la planta baja)
+    if ([].concat(sala.planta || 'baja').indexOf('baja') === -1) {
+      document.querySelectorAll('a.btn-volver, a.btn-plano').forEach(function (a) {
+        a.href = 'index.html#alta';
+      });
+    }
+
     // Foto de cabecera
     var foto        = document.getElementById('sala-foto');
     var placeholder = document.getElementById('sala-foto-placeholder');

@@ -13,12 +13,15 @@ Permite explorar el plano del monasterio, consultar la ficha de cada estancia y 
 index.html          Plano interactivo (Leaflet.js)
 sala.html           Ficha de estancia (cargada dinámicamente)
 js/
-  data.js           Base de datos de estancias (nombre, foto, bounds/polygon, fichas)
+  data.js           Base de datos de estancias (nombre, foto, planta, bounds/polygon, fichas)
+                    y zonas del índice de los planos sin ficha (ZONAS_SIN_FICHA)
   mapa.js           Lógica del plano interactivo
   sala.js           Lógica de la ficha de estancia + galería + lightbox
 css/
   style.css         Estilos globales
 img/
+  San_Antonio_el_Real_-_Plano_Planta_Baja.png   Plano base de planta baja (desde 0002 Planta baja.pdf)
+  San_Antonio_el_Real_-_Plano_Planta_Alta.png   Plano base de planta alta (desde 0003 Planta alta.pdf)
   salas/            Fotografías de las estancias (WebP, máx. 1200 px, calidad 82)
 lib/                Leaflet 1.x (CSS + JS + iconos, sin dependencias externas)
 convert_images.sh   Convierte PNG/JPG → WebP
@@ -73,6 +76,7 @@ Editar `js/data.js`. Cada entrada sigue este esquema:
   fotos: [                                   // opcional, si hay más de una foto
     "img/salas/San_Antonio_el_Real_-_NombreSala_02.webp"
   ],
+  planta:       "baja",                     // "baja", "alta" o ["baja", "alta"] (doble altura)
   bounds:       [[latSur, lngOeste], [latNorte, lngEste]],  // sala rectangular
   // polygon:   [[lat,lng], ...],            // sala oblicua (sustituye a bounds)
   funcion:      "Uso histórico de la estancia.",
@@ -84,7 +88,8 @@ Editar `js/data.js`. Cada entrada sigue este esquema:
 
 ### Obtener coordenadas del plano
 
-Abre el mapa en el navegador y pulsa **D** para activar el modo de coordenadas.  
+Abre el mapa en el navegador, elige la planta con el selector de la esquina superior derecha y pulsa **D** para activar el modo de coordenadas.  
+Las dos plantas comparten el mismo sistema de coordenadas.  
 Mueve el cursor para ver la posición en tiempo real; haz clic para copiarla al portapapeles.
 
 - Salas rectangulares: toma dos esquinas opuestas → `bounds`.  
